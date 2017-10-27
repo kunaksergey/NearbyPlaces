@@ -3,21 +3,16 @@ package ua.place
 import groovyx.net.http.HTTPBuilder
 
 import static groovyx.net.http.ContentType.JSON
-
-//https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyBpLk-GrkZy8N599XaP9RTsBl-kGNr2Fpg&radius=500&location=48.45925,35.04497
-//https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyBpLk-GrkZy8N599XaP9RTsBl-kGNr2Fpg&radius=500&location=48.45925,35.04497
 import static groovyx.net.http.Method.GET
 
+//https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyBpLk-GrkZy8N599XaP9RTsBl-kGNr2Fpg&radius=500&location=48.45925,35.04497
+//https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyBpLk-GrkZy8N599XaP9RTsBl-kGNr2Fpg&radius=500&location=48.45925,35.04497
 class GooglePlace {
     private final static String BASE_URL = 'https://maps.googleapis.com'
     private final static String NEAR_BY_SEARCH_URI = '/maps/api/place/nearbysearch/json'
     private final static String DETAILS_URI = '/maps/api/place/details/json'
-
-    private final static MAX_PLACES_COUNT = 60
-    private final static DEFAULT_PLACES_COUNT = 20
     private final static DEFAULT_RADIUS = 500
     private final static KEY = "AIzaSyBpLk-GrkZy8N599XaP9RTsBl-kGNr2Fpg"
-    private Integer limit = DEFAULT_PLACES_COUNT
     private final static LANGUAGE = "en"
     private final static PAUSE = 2000
 
@@ -25,12 +20,12 @@ class GooglePlace {
     private BigDecimal latitude
     private BigDecimal longitude
     private lastRequestTimestamp = 0
-    def hasRemoutePage = true
-    def pages = []
-    def currentIndex = -1
-    def result
+    private def hasRemoutePage = true
+    private def pages = [] //список страниц json
+    private def currentIndex = -1
+    private def result //результат-list Places
 
-    def comparator = { attribute, a, b ->
+    private def comparator = { attribute, a, b ->
         def aValue = a.getProperty(attribute)
         def bValue = b.getProperty(attribute)
 
@@ -44,23 +39,14 @@ class GooglePlace {
             return aValue.compareTo(bValue)
     }
 
-
-    def findPlaces() {
-        loadPlaces()
-    }
-
-    def findPlaceSortedByField(field) {
-        places ?: load(countSheets(limit))
-        places.sort(comparator.curry(field))
-    }
-    //Если список есть,то возвращаем, иначе делаем запрос
-    private def loadPlaces() {
-        places ?: load(countSheets(limit))
+    //сортировка по полю
+    def sortedByField(field) {
+        result.sort(comparator.curry(field))
+        this
     }
 
     //Считываем следующую страницу
     def next() {
-
         if (currentIndex < pages.size() - 1) { //Есть ли последующие записи
             currentIndex++
         } else {
@@ -142,13 +128,21 @@ class GooglePlace {
 
     //расчет дистанции
     private def distance(ltd, lgt) {
-        Math.sqrt(Math.pow((Math.abs(latitude) - Math.abs(ltd as long)), 2) + Math.pow((Math.abs(longitude) - Math.abs(lgt as long)), 2))
+        Math.sqrt(Math.pow((Math.abs(latitude) - Math.abs(ltd as BigDecimal)), 2) + Math.pow((Math.abs(longitude) - Math.abs(lgt as BigDecimal)), 2))
     }
 
 
+    def limit(count){
+        (count>result.size())?:result.size()
+        result=result.take(count)
+        this
+    }
+
     def searchCurrentPage() {
         def list = []
-        result = pages[currentIndex].results.each { list << parsePlace(it) }
+        if (currentIndex >= 0 && currentIndex < pages.size()) {
+            result = pages[currentIndex].results.each { list << parsePlace(it) }
+        }
         result = list
         this
     }
@@ -164,15 +158,17 @@ class GooglePlace {
         result
     }
 
-    def parsePlace(it) {
+    private def parsePlace(it) {
+        def lat = it.geometry.location.lat
+        def lng = it.geometry.location.lng
         def place = new Place();
         place.id = it.id
         place.name = it.name
         place.placeId = it.place_id
         place.vicinity = it.vicinity
         place.distance = distance(lat, lng)
-        place.latitude = it.lat
-        place.longitude = it.lng
+        place.latitude = lat as BigDecimal
+        place.longitude = lng as BigDecimal
         place.types = it.types
         place
     }
