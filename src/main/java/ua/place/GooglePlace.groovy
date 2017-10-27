@@ -21,6 +21,10 @@ class GooglePlace {
     private BigDecimal latitude
     private BigDecimal longitude
     def places
+    def pages
+    def currentPage
+    def currentIndex=-1
+    def result
 
     def comparator = { attribute, a, b ->
         def aValue = a.getProperty(attribute)
@@ -49,6 +53,8 @@ class GooglePlace {
     private def loadPlaces() {
         places ?: load(countSheets(limit))
     }
+
+
 
     //Считываем нужное кол-во страниц
     private def load(countPages) {
@@ -146,14 +152,31 @@ class GooglePlace {
         Math.sqrt(Math.pow((Math.abs(latitude)-Math.abs(ltd)),2)+Math.pow((Math.abs(longitude)-Math.abs(lgt)),2))
     }
 
+    def previos(){
+        if(currentIndex>=0){
+            currentPage=pages[currentIndex--]
+        }
+        this
+    }
+
     def searchCurrentPage(){
+        def list=[]
+        result=currentPage.results.each{list<<parsePlace(it)}
+        result=list
         this
     }
 
     def searchAllPages(){
+        pages.each
         this
     }
 
+    def loadResult(){
+        result
+    }
+    def parsePlace(it){
+
+    }
 }
 
 
