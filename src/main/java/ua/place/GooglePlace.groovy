@@ -21,9 +21,9 @@ class GooglePlace {
     private BigDecimal latitude
     private BigDecimal longitude
     def places
-    def pages
+    def pages = []
     def currentPage
-    def currentIndex=-1
+    def currentIndex = -1
     def result
 
     def comparator = { attribute, a, b ->
@@ -54,17 +54,12 @@ class GooglePlace {
         places ?: load(countSheets(limit))
     }
 
-
-
     //Считываем нужное кол-во страниц
-    private def load(countPages) {
-        def result = []
-        def pageToken
+     def next() {
 
-        for (int i = 1; i <= countPages; i++) {
-            if (i != 1) {
-                sleep(PAUSE)
-            }
+        if (pages[currentIndex + 1] != null) {
+            currentPage = pages[currentIndex + 1]
+        } else {
             def http = new HTTPBuilder(baseUrl)
             http.request(GET, JSON) {
                 uri.path = nearBySearchUri //uri near places
@@ -73,25 +68,17 @@ class GooglePlace {
                              location: latitude + ',' + longitude,
                              radius  : radius,
                              language: LANGUAGE]
-                if (pageToken != null) {
+                if (pages.size()>0 && pages[pages.size()-1].pagetoken != null) {
                     uri.query = [key      : KEY,
                                  location : latitude + ',' + longitude,
                                  radius   : radius,
                                  language : LANGUAGE,
-                                 pagetoken: pageToken]
+                                 pagetoken: pages[pages.size()-1].next_page_token]
                 }
 
                 response.success = { resp, json ->
                     assert resp.status == 200
-//                    println "My response handler got response: ${resp.statusLine}"
-//                    println "Response length: ${resp.headers.'Content-Length'}"
-                    pageToken = json.next_page_token
-
-                    json.results.each {
-                        def lat=it.geometry.location.lat
-                        def lng=it.geometry.location.lng
-                        result << new Place(id: it.id, name: it.name, placeId:it.place_id,vicinity: it.vicinity, distance:distance(lat,lng), latitude: lat, longitude: lng,types: it.types)
-                    }
+                pages<<json
                 }
 
                 // called only for a 404 (not found) status code:
@@ -99,35 +86,35 @@ class GooglePlace {
                     println 'Not found'
                 }
             }
-
-            if (pageToken == null) {
-                break;
-            }
-
         }
-
-        places = result
+         currentIndex++
+        this
     }
 
+    def previos() {
+        if (currentIndex >= 0) {
+            currentPage = pages[currentIndex--]
+        }
+        this
+    }
 
-
-   //Получаем дополнительные данные по id
-    static def loadDetail(Place place){
+    //Получаем дополнительные данные по id
+    static def loadDetail(Place place) {
 
         def http = new HTTPBuilder(baseUrl)
 
         http.request(GET, JSON) {
             uri.path = detailsUri //uri place detail
-            uri.query = [placeid: place.placeId,
-                         key   : KEY,
+            uri.query = [placeid : place.placeId,
+                         key     : KEY,
                          language: LANGUAGE]
 
 
             response.success = { resp, json ->
                 assert resp.status == 200
-                place.detail.rating=json.result.rating
-                place.detail.icon=json.result.icon
-                }
+                place.detail.rating = json.result.rating
+                place.detail.icon = json.result.icon
+            }
 
             // called only for a 404 (not found) status code:
             response.'404' = { resp ->
@@ -148,34 +135,33 @@ class GooglePlace {
     }
 
     //кол-во запрашиваемых страниц
-    private def distance(ltd,lgt) {
-        Math.sqrt(Math.pow((Math.abs(latitude)-Math.abs(ltd)),2)+Math.pow((Math.abs(longitude)-Math.abs(lgt)),2))
+    private def distance(ltd, lgt) {
+        Math.sqrt(Math.pow((Math.abs(latitude) - Math.abs(ltd)), 2) + Math.pow((Math.abs(longitude) - Math.abs(lgt)), 2))
     }
 
-    def previos(){
-        if(currentIndex>=0){
-            currentPage=pages[currentIndex--]
-        }
+
+
+    def searchCurrentPage() {
+        def list = []
+        result = currentPage.results.each { list << parsePlace(it) }
+        result = list
         this
     }
 
-    def searchCurrentPage(){
-        def list=[]
-        result=currentPage.results.each{list<<parsePlace(it)}
-        result=list
-        this
-    }
-
-    def searchAllPages(){
+    def searchAllPages() {
         pages.each
         this
     }
 
-    def loadResult(){
+    def loadResult() {
         result
     }
-    def parsePlace(it){
 
+    def parsePlace(it) {
+        return new Place(id: it.id, name: it.name,
+                placeId: it.place_id, vicinity: it.vicinity,
+                distance: distance(lat, lng), latitude: lat,
+                longitude: lng, types: it.types)
     }
 }
 
