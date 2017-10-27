@@ -1,5 +1,6 @@
 package ua.place
 //https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyBpLk-GrkZy8N599XaP9RTsBl-kGNr2Fpg&radius=500&location=48.45925,35.04497
+//https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyBpLk-GrkZy8N599XaP9RTsBl-kGNr2Fpg&radius=500&location=48.45925,35.04497
 
 import groovyx.net.http.HTTPBuilder
 
@@ -12,11 +13,11 @@ class GooglePlace {
     private final static KEY = "AIzaSyBpLk-GrkZy8N599XaP9RTsBl-kGNr2Fpg"
     private Integer limit = DEFAULT_PLACES_COUNT
     private final static LANGUAGE = "en"
-    private final static PAUSE=1500
+    private final static PAUSE = 1500
     private Integer radius
     private final static String baseUrl = 'https://maps.googleapis.com'
     private final static String nearBySearchUri = '/maps/api/place/nearbysearch/json'
-    private final static String detailsUri = 'https://maps.googleapis.com/maps/api/place/details/json'
+    private final static String detailsUri = '/maps/api/place/details/json'
     private BigDecimal latitude
     private BigDecimal longitude
     def places
@@ -40,7 +41,7 @@ class GooglePlace {
         loadPlaces()
     }
 
-    def findPlaceSortedByField(field){
+    def findPlaceSortedByField(field) {
         places ?: load(countSheets(limit))
         places.sort(comparator.curry(field))
     }
@@ -49,24 +50,18 @@ class GooglePlace {
         places ?: load(countSheets(limit))
     }
 
-
-    def findPlacesById(id) {
-
-
-    }
-
     //Считываем нужное кол-во страниц
     private def load(countPages) {
         def result = []
         def pageToken
 
         for (int i = 1; i <= countPages; i++) {
-            if(i!=1){
+            if (i != 1) {
                 sleep(PAUSE)
             }
             def http = new HTTPBuilder(baseUrl)
             http.request(GET, JSON) {
-                uri.path = nearBySearchUri
+                uri.path = nearBySearchUri //uri near places
 
                 uri.query = [key     : KEY,
                              location: latitude + ',' + longitude,
@@ -87,12 +82,11 @@ class GooglePlace {
                     pageToken = json.next_page_token
 
                     json.results.each {
-                        result << new Place(id: it.id, name: it.name, vicinity:it.vicinity, types: it.types,latitude:it.latitude,longitude:it.longitude)
+                        def lat=it.geometry.location.lat
+                        def lng=it.geometry.location.lng
+                        result << new Place(id: it.id, name: it.name, placeId:it.place_id,vicinity: it.vicinity, distance:distance(lat,lng), latitude: lat, longitude: lng,types: it.types,)
                     }
                 }
-//                json.results.each{
-//                     places<<new Place(it.id,it.name,it.types)
-//                }
 
                 // called only for a 404 (not found) status code:
                 response.'404' = { resp ->
@@ -106,46 +100,50 @@ class GooglePlace {
 
         }
 
-        places=result
+        places = result
     }
 
-//Получаем дополнительные данные по id
-//    void loadDetailPlaceById(id){
-//        def http = new HTTPBuilder(baseUrl)
-//
-//        http.request(GET, JSON) {
-//            uri.path = detailsUri
-//            uri.query = [key     : key,
-//                         placeid: id
-//                         language: 'ru']
-//
-//
-//            response.success = { resp, json ->
-//                assert resp.status == 200
-//                println "My response handler got response: ${resp.statusLine}"
-//                println "Response length: ${resp.headers.'Content-Length'}"
-//                places=[]
-//                json.results.each{
-//                    places<<new Place(it.id,it.name,it.types)
-//                }
-//
-//            }
-//
-//            // called only for a 404 (not found) status code:
-//            response.'404' = { resp ->
-//                println 'Not found'
-//            }
-//        }
-//    }
+
+
+   //Получаем дополнительные данные по id
+    static def loadDetail(Place place){
+
+        def http = new HTTPBuilder(baseUrl)
+
+        http.request(GET, JSON) {
+            uri.path = detailsUri //uri place detail
+            uri.query = [placeid: place.placeId,
+                         key   : KEY,
+                         language: LANGUAGE]
+
+
+            response.success = { resp, json ->
+                assert resp.status == 200
+                place.detail.rating=json.result.rating
+                place.detail.icon=json.result.icon
+                }
+
+            // called only for a 404 (not found) status code:
+            response.'404' = { resp ->
+                println 'Not found'
+            }
+        }
+
+    }
 
 //Получаем дополнительные данные объекта
     void loadDetailPlace(Place place) {
-        loadDetailPlaceById(place.id)
+        loadDetail(place.id)
     }
 
 //кол-во запрашиваемых страниц
-    private Integer countSheets(limit) {
+    private static Integer countSheets(limit) {
         (int) Math.ceil(Math.min(limit, MAX_PLACES_COUNT) / DEFAULT_PLACES_COUNT)
+    }
+
+    //кол-во запрашиваемых страниц
+    private def distance(ltd,lgt) {
+        Math.sqrt(Math.pow((Math.abs(latitude)-Math.abs(ltd)),2)+Math.pow((Math.abs(longitude)-Math.abs(lgt)),2))
     }
 
 }

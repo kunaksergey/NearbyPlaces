@@ -2,18 +2,26 @@ package ua.place
 
 class Place {
     def id
+    def placeId
     def name
     def vicinity
+    def distance
     def types=[]
     private BigDecimal latitude
     private BigDecimal longitude
-
+    private Detail detail=new Detail()
 
     @Override
-    public String toString() {
+    String toString() {
         return "Place{" +
-                "id=" + id +
-                ", name=" + name +
+                "name=" + name +
+                ", distance=" + distance +
                 '}';
+    }
+
+
+    class Detail {
+        def rating
+        def icon
     }
 }
