@@ -84,7 +84,7 @@ class GooglePlace {
                     json.results.each {
                         def lat=it.geometry.location.lat
                         def lng=it.geometry.location.lng
-                        result << new Place(id: it.id, name: it.name, placeId:it.place_id,vicinity: it.vicinity, distance:distance(lat,lng), latitude: lat, longitude: lng,types: it.types,)
+                        result << new Place(id: it.id, name: it.name, placeId:it.place_id,vicinity: it.vicinity, distance:distance(lat,lng), latitude: lat, longitude: lng,types: it.types)
                     }
                 }
 
@@ -144,6 +144,14 @@ class GooglePlace {
     //кол-во запрашиваемых страниц
     private def distance(ltd,lgt) {
         Math.sqrt(Math.pow((Math.abs(latitude)-Math.abs(ltd)),2)+Math.pow((Math.abs(longitude)-Math.abs(lgt)),2))
+    }
+
+    def searchCurrentPage(){
+        this
+    }
+
+    def searchAllPages(){
+        this
     }
 
 }
