@@ -8,7 +8,7 @@ printPlace(googlePlace.findPlaceSortedByField("distance"))
 
 void printPlace(def list){
     list.each{
-        println "${it.name}-${it.vicinity}-${it.types}"
+        println "${it.name}-${it.distance}"
     }
 }
 
