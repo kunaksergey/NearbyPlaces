@@ -1,28 +1,32 @@
 package ua.place
-//https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyBpLk-GrkZy8N599XaP9RTsBl-kGNr2Fpg&radius=500&location=48.45925,35.04497
-//https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyBpLk-GrkZy8N599XaP9RTsBl-kGNr2Fpg&radius=500&location=48.45925,35.04497
 
 import groovyx.net.http.HTTPBuilder
 
-import static groovyx.net.http.Method.GET
 import static groovyx.net.http.ContentType.JSON
 
+//https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyBpLk-GrkZy8N599XaP9RTsBl-kGNr2Fpg&radius=500&location=48.45925,35.04497
+//https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyBpLk-GrkZy8N599XaP9RTsBl-kGNr2Fpg&radius=500&location=48.45925,35.04497
+import static groovyx.net.http.Method.GET
+
 class GooglePlace {
+    private final static String BASE_URL = 'https://maps.googleapis.com'
+    private final static String NEAR_BY_SEARCH_URI = '/maps/api/place/nearbysearch/json'
+    private final static String DETAILS_URI = '/maps/api/place/details/json'
+
     private final static MAX_PLACES_COUNT = 60
     private final static DEFAULT_PLACES_COUNT = 20
+    private final static DEFAULT_RADIUS = 500
     private final static KEY = "AIzaSyBpLk-GrkZy8N599XaP9RTsBl-kGNr2Fpg"
     private Integer limit = DEFAULT_PLACES_COUNT
     private final static LANGUAGE = "en"
-    private final static PAUSE = 1500
-    private Integer radius
-    private final static String baseUrl = 'https://maps.googleapis.com'
-    private final static String nearBySearchUri = '/maps/api/place/nearbysearch/json'
-    private final static String detailsUri = '/maps/api/place/details/json'
+    private final static PAUSE = 2000
+
+    private def radius = DEFAULT_RADIUS
     private BigDecimal latitude
     private BigDecimal longitude
-    def places
+    private lastRequestTimestamp = 0
+    def hasRemoutePage = true
     def pages = []
-    def currentPage
     def currentIndex = -1
     def result
 
@@ -54,31 +58,42 @@ class GooglePlace {
         places ?: load(countSheets(limit))
     }
 
-    //Считываем нужное кол-во страниц
-     def next() {
+    //Считываем следующую страницу
+    def next() {
 
-        if (pages[currentIndex + 1] != null) {
-            currentPage = pages[currentIndex + 1]
+        if (currentIndex < pages.size() - 1) { //Есть ли последующие записи
+            currentIndex++
         } else {
-            def http = new HTTPBuilder(baseUrl)
+            if (!hasRemoutePage) {
+                return this
+            }
+            def http = new HTTPBuilder(BASE_URL)
+            def p = PAUSE - (System.currentTimeMillis() - lastRequestTimestamp)
+            if (p > 0) {
+                sleep(p as long)//засыпаем если между запросами меньше PAUSE
+            }
             http.request(GET, JSON) {
-                uri.path = nearBySearchUri //uri near places
+                uri.path = NEAR_BY_SEARCH_URI //uri near places
 
                 uri.query = [key     : KEY,
                              location: latitude + ',' + longitude,
                              radius  : radius,
                              language: LANGUAGE]
-                if (pages.size()>0 && pages[pages.size()-1].pagetoken != null) {
+                if (pages.size() > 0 && pages[pages.size() - 1].next_page_token != null) {
                     uri.query = [key      : KEY,
                                  location : latitude + ',' + longitude,
                                  radius   : radius,
                                  language : LANGUAGE,
-                                 pagetoken: pages[pages.size()-1].next_page_token]
+                                 pagetoken: pages[pages.size() - 1].next_page_token]
                 }
 
                 response.success = { resp, json ->
                     assert resp.status == 200
-                pages<<json
+
+                    pages << json
+                    if (json.next_page_token == null) {
+                        hasRemoutePage = false
+                    }
                 }
 
                 // called only for a 404 (not found) status code:
@@ -86,25 +101,26 @@ class GooglePlace {
                     println 'Not found'
                 }
             }
+            lastRequestTimestamp = System.currentTimeMillis()
         }
-         currentIndex++
+        currentIndex++
         this
     }
 
     def previos() {
-        if (currentIndex >= 0) {
-            currentPage = pages[currentIndex--]
+        if (currentIndex > 0) {
+            currentIndex--
         }
         this
     }
 
-    //Получаем дополнительные данные по id
-    static def loadDetail(Place place) {
+    //Получаем дополнительные данные объекта
+    static def loadDetails(Place place) {
 
-        def http = new HTTPBuilder(baseUrl)
+        def http = new HTTPBuilder(BASE_URL)
 
         http.request(GET, JSON) {
-            uri.path = detailsUri //uri place detail
+            uri.path = DETAILS_URI //uri place detail
             uri.query = [placeid : place.placeId,
                          key     : KEY,
                          language: LANGUAGE]
@@ -124,33 +140,22 @@ class GooglePlace {
 
     }
 
-//Получаем дополнительные данные объекта
-    void loadDetailPlace(Place place) {
-        loadDetail(place.id)
-    }
-
-//кол-во запрашиваемых страниц
-    private static Integer countSheets(limit) {
-        (int) Math.ceil(Math.min(limit, MAX_PLACES_COUNT) / DEFAULT_PLACES_COUNT)
-    }
-
-    //кол-во запрашиваемых страниц
+    //расчет дистанции
     private def distance(ltd, lgt) {
-        Math.sqrt(Math.pow((Math.abs(latitude) - Math.abs(ltd)), 2) + Math.pow((Math.abs(longitude) - Math.abs(lgt)), 2))
+        Math.sqrt(Math.pow((Math.abs(latitude) - Math.abs(ltd as long)), 2) + Math.pow((Math.abs(longitude) - Math.abs(lgt as long)), 2))
     }
-
 
 
     def searchCurrentPage() {
         def list = []
-        result = currentPage.results.each { list << parsePlace(it) }
+        result = pages[currentIndex].results.each { list << parsePlace(it) }
         result = list
         this
     }
 
     def searchAllPages() {
         def list = []
-        pages.each{it.results.each{list<<parsePlace(it) }}
+        pages.each { it.results.each { list << parsePlace(it) } }
         result = list
         this
     }
@@ -160,10 +165,16 @@ class GooglePlace {
     }
 
     def parsePlace(it) {
-        return new Place(id: it.id, name: it.name,
-                placeId: it.place_id, vicinity: it.vicinity,
-                distance: distance(lat, lng), latitude: lat,
-                longitude: lng, types: it.types)
+        def place = new Place();
+        place.id = it.id
+        place.name = it.name
+        place.placeId = it.place_id
+        place.vicinity = it.vicinity
+        place.distance = distance(lat, lng)
+        place.latitude = it.lat
+        place.longitude = it.lng
+        place.types = it.types
+        place
     }
 }
 

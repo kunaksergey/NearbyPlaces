@@ -7,9 +7,9 @@ class Place {
     def vicinity
     def distance
     def types=[]
-    private BigDecimal latitude
-    private BigDecimal longitude
-    private Detail detail=new Detail()
+    def BigDecimal latitude
+    def BigDecimal longitude
+    def Detail detail=new Detail()
 
     @Override
     String toString() {

@@ -4,8 +4,8 @@ import ua.place.Place
 googlePlace=new GooglePlace(latitude:48.45925,longitude:35.04497,radius:500,limit:21)
 //def r=googlePlace.findPlaces()
 //printPlace(googlePlace.findPlaceSortedByField("distance"))
-googlePlace.next().next().previos()
-
+def result=googlePlace.next().searchCurrentPage().loadResult()
+println "xxx"
 void printPlace(def list){
     list.each{
         println "${it.name}-${it.distance}"
