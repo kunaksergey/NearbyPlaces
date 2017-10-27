@@ -149,7 +149,9 @@ class GooglePlace {
     }
 
     def searchAllPages() {
-        pages.each
+        def list = []
+        pages.each{it.results.each{list<<parsePlace(it) }}
+        result = list
         this
     }
 
