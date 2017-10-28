@@ -4,7 +4,11 @@ import ua.place.Place
 googlePlace=new GooglePlace(latitude:48.45925,longitude:35.04497)
 //def r=googlePlace.findPlaces()
 //printPlace(googlePlace.findPlaceSortedByField("distance"))
-def result=googlePlace.next().next().searchAllPages().sortedByField("distance").limit(1).loadResult()
-println ""
+def result=googlePlace.next().
+        next().searchAllPages().
+        sortedByField("distance").
+        limit(1).loadResult()
+println result
+
 
 

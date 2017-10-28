@@ -12,10 +12,12 @@ class Place {
     def Detail detail=new Detail()
 
     @Override
-    String toString() {
+    public String toString() {
         return "Place{" +
                 "name=" + name +
+                ", vicinity=" + vicinity +
                 ", distance=" + distance +
+                ", types=" + types +
                 '}';
     }
 
