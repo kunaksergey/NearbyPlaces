@@ -38,6 +38,7 @@ class GooglePlace {
             if (p > 0) {
                 sleep(p as long)//засыпаем если между запросами меньше PAUSE
             }
+
             def http = new HTTPBuilder(BASE_URL)
             http.request(GET, JSON) {
                 uri.path = NEAR_BY_SEARCH_URI //uri near places
@@ -71,7 +72,7 @@ class GooglePlace {
     }
 
     //Получить все страницы
-    def searchAllPages() throws NotReceivedException {
+    def searchAll() throws NotReceivedException {
         def list = []
         pages.each {
             if (it.status != 'OK') throw new NotReceivedException(it.status)
@@ -82,7 +83,7 @@ class GooglePlace {
     }
 
     //Получить текущую страницу
-    def searchCurrentPage() throws NotReceivedException {
+    def searchOne() throws NotReceivedException {
         def list = []
         if (pages[currentIndex].status != 'OK') throw new NotReceivedException(pages[currentIndex].status)
         pages[currentIndex].results.each { list << parsePlace(it) }

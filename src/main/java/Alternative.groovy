@@ -87,7 +87,7 @@ def parsePlace = { it ->
 }
 
 //Получить все страницы
-def searchAllPages = {
+def searchAll = {
     def result = []
     pages.each { it.results.each { result << parsePlace(it) } }
     result
@@ -95,7 +95,7 @@ def searchAllPages = {
 /** *************************/
 
 //Получить текущую страницу
-def searchCurrentPage = {
+def searchOne = {
     def result = []
     pages[currentIndex].results.each { result << parsePlace(it) }
     result
@@ -180,7 +180,7 @@ def loadDetails = { place ->
 
 next()
 next()
-def reached = searchCurrentPage()
+def reached = searchOne()
 def sorted = sortedByField(reached, "distance")
 def result = limit(sorted, 1)
 println result

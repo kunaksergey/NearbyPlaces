@@ -7,7 +7,7 @@ googlePlace = new GooglePlace(latitude: 48.45925, longitude: 35.04497)
 //printPlace(googlePlace.findPlaceSortedByField("distance"))
 try {
     def result = googlePlace.next().
-            next().searchCurrentPage().
+            next().searchOne().
             sortedByField("distance").
             limit(1).loadResult()
     println result
