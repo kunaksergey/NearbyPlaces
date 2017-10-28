@@ -42,22 +42,20 @@ class GooglePlace {
             http.request(GET, JSON) {
                 uri.path = NEAR_BY_SEARCH_URI //uri near places
 
-                uri.query = [key     : KEY,
-                             location: latitude + ',' + longitude,
-                             radius  : radius,
-                             language: LANGUAGE]
+                def keyMap = [key     : KEY,
+                              location: latitude + ',' + longitude,
+                              radius  : radius,
+                              language: LANGUAGE]
                 if (pages.size() > 0 && pages[pages.size() - 1].next_page_token != null) {
-                    uri.query = [key      : KEY,
-                                 location : latitude + ',' + longitude,
-                                 radius   : radius,
-                                 language : LANGUAGE,
-                                 pagetoken: pages[pages.size() - 1].next_page_token]
+                    keyMap << [pagetoken: pages[pages.size() - 1].next_page_token as String]
                 }
+
+                uri.query = keyMap
 
                 response.success = { resp, json ->
                     assert resp.status == 200
-
                     pages << json
+                    currentIndex++
                     if (json.next_page_token == null) {
                         hasRemoutePage = false
                     }
@@ -69,24 +67,25 @@ class GooglePlace {
             }
             lastRequestTimestamp = System.currentTimeMillis()
         }
-        currentIndex++
         this
     }
 
     //Получить все страницы
-    def searchAllPages() {
+    def searchAllPages() throws NotReceivedException {
         def list = []
-        pages.each { it.results.each { list << parsePlace(it) } }
+        pages.each {
+            if (it.status != 'OK') throw new NotReceivedException(it.status)
+            it.results.each { list << parsePlace(it) }
+        }
         result = list
         this
     }
 
     //Получить текущую страницу
-    def searchCurrentPage() {
+    def searchCurrentPage() throws NotReceivedException {
         def list = []
-        if (currentIndex >= 0 && currentIndex < pages.size()) {
-            pages[currentIndex].results.each { list << parsePlace(it) }
-        }
+        if (pages[currentIndex].status != 'OK') throw new NotReceivedException(pages[currentIndex].status)
+        pages[currentIndex].results.each { list << parsePlace(it) }
         result = list
         this
     }

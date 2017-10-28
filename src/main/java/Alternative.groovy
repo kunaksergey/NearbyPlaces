@@ -36,22 +36,20 @@ def next = {
         def http = new HTTPBuilder(baseUrl)
         http.request(GET, JSON) {
             uri.path = nearBySearchUri //uri near places
-            uri.query = [key     : key,
-                         location: latitude + ',' + longitude,
-                         radius  : radius,
-                         language: language]
+            def keyMap = [key     : key,
+                          location: latitude + ',' + longitude,
+                          radius  : radius,
+                          language: language]
             if (pages.size() > 0 && pages[pages.size() - 1].next_page_token != null) {
-                uri.query = [key      : key,
-                             location : latitude + ',' + longitude,
-                             radius   : radius,
-                             language : language,
-                             pagetoken: pages[pages.size() - 1].next_page_token]
+                keyMap << [pagetoken: pages[pages.size() - 1].next_page_token as String]
             }
+            uri.query = keyMap
 
             response.success = { resp, json ->
                 assert resp.status == 200
 
                 pages << json
+                currentIndex++
                 if (json.next_page_token == null) {
                     hasRemoutePage = false
                 }
@@ -64,7 +62,6 @@ def next = {
         }
         lastRequestTimestamp = System.currentTimeMillis()
     }
-    currentIndex++
 }
 
 //расчет дистанции
@@ -100,12 +97,10 @@ def searchAllPages = {
 //Получить текущую страницу
 def searchCurrentPage = {
     def result = []
-    if (currentIndex >= 0 && currentIndex < pages.size()) {
-        pages[currentIndex].results.each { result << parsePlace(it) }
-    }
+    pages[currentIndex].results.each { result << parsePlace(it) }
     result
 }
-/***************************/
+/** *************************/
 
 //Получение предыдущей страницы
 def previos = {
@@ -113,7 +108,7 @@ def previos = {
         currentIndex--
     }
 }
-/***************************/
+/** *************************/
 
 //Компаратор для сравнения полей
 def comparator = { attribute, a, b ->
@@ -129,7 +124,7 @@ def comparator = { attribute, a, b ->
     else
         return aValue.compareTo(bValue)
 }
-/*************************/
+/** ***********************/
 
 //сортировка по полю
 def sortedByField = { result, field ->
@@ -148,16 +143,16 @@ def filterByType = { list, field ->
     }
     result
 }
-/**************************/
+/** ************************/
 
 //Ограничение результата
 def limit = { list, count ->
-    def result=[]
+    def result = []
     (count > list.size()) ?: list.size()
-    result=list.take(count)
+    result = list.take(count)
     result
 }
-/**************************/
+/** ************************/
 
 //Получаем дополнительные данные объекта
 def loadDetails = { place ->
@@ -187,5 +182,5 @@ next()
 next()
 def reached = searchCurrentPage()
 def sorted = sortedByField(reached, "distance")
-def result=limit(sorted,1)
+def result = limit(sorted, 1)
 println result
