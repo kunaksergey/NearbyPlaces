@@ -19,11 +19,11 @@ class GooglePlace {
     private def radius = DEFAULT_RADIUS
     private BigDecimal latitude
     private BigDecimal longitude
-    private lastRequestTimestamp = 0
+    private def lastRequestTimestamp = 0
     private def hasRemoutePage = true
     private def pages = [] //список страниц json
     private def currentIndex = -1
-    private def result //результат-list Places
+    private def result=[] //результат-list Places
 
     //Считываем следующую страницу
     def next() {

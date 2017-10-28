@@ -1,4 +1,5 @@
 import groovyx.net.http.HTTPBuilder
+import ua.place.GooglePlace
 import ua.place.Place
 
 import static groovyx.net.http.ContentType.JSON
@@ -64,6 +65,11 @@ def next = {
     }
 }
 
+//прерывание скрипта
+def interrupt={message->
+    println message
+    System.exit(0)
+}
 //расчет дистанции
 def distance = { ltd, lgt ->
     Math.sqrt(Math.pow((Math.abs(latitude) - Math.abs(ltd as BigDecimal)), 2) + Math.pow((Math.abs(longitude) - Math.abs(lgt as BigDecimal)), 2))
@@ -89,7 +95,10 @@ def parsePlace = { it ->
 //Получить все страницы
 def searchAll = {
     def result = []
-    pages.each { it.results.each { result << parsePlace(it) } }
+    pages.each {
+        if (it.status != 'OK') interrupt(it.status)
+        it.results.each { result << parsePlace(it) }
+    }
     result
 }
 /** *************************/
@@ -97,6 +106,7 @@ def searchAll = {
 //Получить текущую страницу
 def searchOne = {
     def result = []
+    if (pages[currentIndex].status != 'OK') interrupt(pages[currentIndex].status)
     pages[currentIndex].results.each { result << parsePlace(it) }
     result
 }
@@ -180,7 +190,9 @@ def loadDetails = { place ->
 
 next()
 next()
-def reached = searchOne()
+def reached = searchAll()
 def sorted = sortedByField(reached, "distance")
-def result = limit(sorted, 1)
-println result
+def result = limit(sorted, 10)
+assert result[0] instanceof Place
+GooglePlace.loadDetails(result[0] as Place)
+println result[0]

@@ -18,6 +18,7 @@ class Place {
                 ", vicinity=" + vicinity +
                 ", distance=" + distance +
                 ", types=" + types +
+                ", detail=" + detail +
                 '}';
     }
 
@@ -25,5 +26,13 @@ class Place {
     class Detail {
         def rating
         def icon
+
+        @Override
+        public String toString() {
+            return "Detail{" +
+                    "rating=" + rating +
+                    ", icon=" + icon +
+                    '}';
+        }
     }
 }
