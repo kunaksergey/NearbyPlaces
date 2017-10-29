@@ -1,0 +1,721 @@
+  { "html_attributions" : [],
+   "next_page_token" : "CpQCDwEAADv2lsgZmfhOdqgDbV_F14__ig_EoaJkOzngHsbptmU9D5HP5XVP2UoXAGgIMqmgy3pu3cP1tRYzCsUwG7rlJhGUTx8Bqs2NTfHBSMKHgUHDkXoR4qRujb0mrEXNLAG7CjpIq_dEb5e7HCZA0BxfOVNNoaDJVn7dchXkuRmCs6uD3cHE88JM9j2DfOjuQisxPBDOdToxT_i3BLKXO54Zxxc049zDZxnKP1I0C4LjaiPpd7SVa_NLC0N1bB5rsBub9SrV0gvAmjyFxY9GKt5oG88g6o3tTkYeMbfgh_hxZLKD9qceTdSl0bTL28ouoUudyzFqeBdrUeDM_hV6EnLrjdLQOFVM9lSxxSJw2JM3-iB6EhABpoZt6tUNA_6SAFqg714_GhSTQiyf3h-jLRDDaU89oJNkD46vDA",
+   "results" : [
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 48.46471700000001,
+               "lng" : 35.046183
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.56886799999999,
+                  "lng" : 35.2427379
+               },
+               "southwest" : {
+                  "lat" : 48.355729,
+                  "lng" : 34.757975
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/geocode-71.png",
+         "id" : "158fe44e85c82ecaef37704e2f9a8e89dbe5d7f8",
+         "name" : "Днипро",
+         "photos" : [
+            {
+               "height" : 3096,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/117597673958077114379/photos\"\u003eЕвгений Сазонов\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAleMEISgmHaeN8T41vPqgc-ouUXzfyOPQLZ56lAVHmG3l1Cl2Kt8Ovd-dy4aZOTdNBmc7wDVzIe66uGOYKe9u5bDVVLtS5WqEm47Au3TCp7q-n2tEMf7mRtdCrv_zbhp2EhCjW6S9NzrUH2yAarigRNYJGhSbjdn2CzcutbeJMxwEnApz_6ZVPQ",
+               "width" : 4128
+            }
+         ],
+         "place_id" : "ChIJj0YI_QPj20ARuhrB8tXzHAo",
+         "reference" : "CmRbAAAA34v-hZtNrADfvQxQX0RtH8a4E3rbJOZPhUOHzqOATaiNb_utmZRcMor3Z0cWraF1yMTxCT7-iJGJITUERGNHARCAQd4apvMaC45LJBDpqX2oTac6d2kLPImxVm-S64lyEhBJ4b6a29-JTiFd5jc8nFYFGhTRO1UM3kkHsir5FbQbb50dgAVt3Q",
+         "scope" : "GOOGLE",
+         "types" : [ "locality", "political" ],
+         "vicinity" : "Днипро"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 48.46164419999999,
+               "lng" : 35.04212740000001
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.46294143029149,
+                  "lng" : 35.04357098029151
+               },
+               "southwest" : {
+                  "lat" : 48.46024346970849,
+                  "lng" : 35.04087301970851
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+         "id" : "51821d5ff54f97290c91502c6bd8e0cc2144d5ad",
+         "name" : "Reikartz Днепр",
+         "opening_hours" : {
+            "open_now" : true,
+            "weekday_text" : []
+         },
+         "photos" : [
+            {
+               "height" : 1872,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/111900523092317005577/photos\"\u003eАлина Слободянюк\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRZAAAAeUFaVfWISWOWPgkOOZtZMAKRUSmtZtGIuVG6RT0hWLG25TFiJ0n5SBkcl4EdPHDH1bMaHNMDHyth3e3DF1gaTgTSVIsv7JXmB0V2Xte_BMJ8s9C2Mdu-3zDTSvd_vG27EhCyDaygYCu-UvSNiyyTtJGtGhQ6t-MHeMlnTgztVMbZAp1XI6DyLw",
+               "width" : 3328
+            }
+         ],
+         "place_id" : "ChIJgZFchOfi20ARP6N-wMQ56Z4",
+         "rating" : 4.5,
+         "reference" : "CmRSAAAAhZqD_cgtFdJfR1PdM082wHPTQnP45vkB1QO2Tzlis6IkbSAbGd954ovCKTjG3t7JhkAe0a6XoLAQDOyEQLk9WtEYeZgglBuzhOzt23Esp50tYtA7ryKHSitUHhkLJVguEhBjhyMsSU9h43O_mjIURr38GhRUw0Hb0exbqbUs6rPTy1t9e4D3bg",
+         "scope" : "GOOGLE",
+         "types" : [ "lodging", "point_of_interest", "establishment" ],
+         "vicinity" : "вулиця Троїцька, 12А, Дніпро́"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 48.4607353,
+               "lng" : 35.0488436
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.4620842802915,
+                  "lng" : 35.0501925802915
+               },
+               "southwest" : {
+                  "lat" : 48.4593863197085,
+                  "lng" : 35.0474946197085
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+         "id" : "44b127867f39770940f40ade9421a37c48bca416",
+         "name" : "Kaspiy Hotel",
+         "photos" : [
+            {
+               "height" : 4032,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/117615318343864729835/photos\"\u003eAlexey Kalyanov\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAqd-I2Psd6SOkTsUo8AH9eqBcz-DAS9NK6HiGzUukn82bAnqihZvKSwqZlH3UfKzE87TdFT5ZSif43FCGXMcVXoLe_lpV3wvKKRc5Arr5uzqlEG8X1oqopKI5JFYp8troEhA2CoeouEiqr4p8ojqZ642iGhRsKXba2B7_44Kal7DlmmKCLs13KQ",
+               "width" : 3024
+            }
+         ],
+         "place_id" : "ChIJ5dnRH9zi20ARzBZp2w9_sNQ",
+         "rating" : 4.2,
+         "reference" : "CmRSAAAA5HauQXpRh6cnfEGXltk5dJMyiUch2ByWdZo1Bnn0QaAYaD1ra4VWtaK0_e4I7r3atwbtMYMO01idLTtuhSfAYT0LJMmb_TH6lb8svLjrsATg-1pN7vP8mvzJZFIRO-HjEhAVLxPFRPfyYQxgO58Wp7BTGhRDl476Ni9aDBVKxblcWiPNaDYaYg",
+         "scope" : "GOOGLE",
+         "types" : [ "lodging", "point_of_interest", "establishment" ],
+         "vicinity" : "вул. Шевченка, 53, Днепропетровск"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 48.4621327,
+               "lng" : 35.042587
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.46341383029149,
+                  "lng" : 35.0440709302915
+               },
+               "southwest" : {
+                  "lat" : 48.46071586970849,
+                  "lng" : 35.0413729697085
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+         "id" : "b60687f6a1934c5cf74aa78333b3a79099f6e91e",
+         "name" : "Litera Hotel",
+         "opening_hours" : {
+            "open_now" : true,
+            "weekday_text" : []
+         },
+         "photos" : [
+            {
+               "height" : 2361,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/102561936575006634427/photos\"\u003eLitera Hotel\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAncWTnI0na5XHsqgi2WaWYHcC9p11BNtavT_ahZJQXTqwf3mLV7P_9xJEOq630ZptjduEVTMKv0SPJP6Ystx7Epawx_FsKM2WN26ONjzHtpsQxot1QNyNcC-CMISPX4aOEhAPLFSJPflzoqm5VjQTkgeKGhQXAZbpsLke4clDoG63qsXzlt0IJQ",
+               "width" : 1574
+            }
+         ],
+         "place_id" : "ChIJ37JMruDi20AR-w7KgaQAftc",
+         "rating" : 4.4,
+         "reference" : "CmRSAAAA1GGHxkYYEbiBXpcaRdNDfp9EryDH-4JM9VPsvk17vAs-xTkRaesR5rdOWedXI_ertkCd-5mfNADn518dH9G0MAyIKkuxqB6r12FgXYv-hpFCcfRZstfJxlzAWyVUUyfsEhAQTyg8yrGU_OFoLViecQINGhQyH9jyyDt_EvnUqNJTA5Dh2MX6qg",
+         "scope" : "GOOGLE",
+         "types" : [ "lodging", "point_of_interest", "establishment" ],
+         "vicinity" : "вулиця Троїцька, 8, Дніпро́"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 48.459697,
+               "lng" : 35.0462296
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.4611173802915,
+                  "lng" : 35.04766548029149
+               },
+               "southwest" : {
+                  "lat" : 48.4584194197085,
+                  "lng" : 35.04496751970849
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+         "id" : "e27f0191b602720f16a5a14b4240498ec12d365e",
+         "name" : "Бизнес апартаменты",
+         "opening_hours" : {
+            "open_now" : true,
+            "weekday_text" : []
+         },
+         "photos" : [
+            {
+               "height" : 5312,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/112864754776238131121/photos\"\u003eRoman Karnyshov\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAUQZSr7yGDSa_HK9xglne6EaG0FuEEZdeJiFkJoW-SQFPTMEXWjrUxsqh6rHfk6ZPWUG3f0FxBRSd2zNThOaEOInMqO3i9tF9XADAUkzdzT3ai7wXetVdg8xGqv0FXDB4EhB0iD2VanMJP0gSaAHSJBXJGhR9h9e9o6hV6AKbvv4DALdawiLmww",
+               "width" : 2988
+            }
+         ],
+         "place_id" : "ChIJAfwU8t7i20AReh1vV2F6WKQ",
+         "rating" : 4.4,
+         "reference" : "CmRSAAAAQoPJFmgkxTLa7Ye1xjQe9b9xi0bal3hNL2lImABdZsbvtmO2lC9EsqABaF1mjVuBaEDkqm3zSiB-fFgXrdfGq1tN2-D6YW-iRnDwzw0hUmrvanZuB1OAdA5Hz5y83K9SEhAzWcLp1hTS0I60iCP8yorAGhRtDN0YddXMxTWGRl2KvgZ_gNooag",
+         "scope" : "GOOGLE",
+         "types" : [ "lodging", "point_of_interest", "establishment" ],
+         "vicinity" : "вулиця Старокозацька, 5, Дніпро́"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 48.457811,
+               "lng" : 35.0475503
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.4591599802915,
+                  "lng" : 35.04889928029149
+               },
+               "southwest" : {
+                  "lat" : 48.4564620197085,
+                  "lng" : 35.04620131970849
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/shopping-71.png",
+         "id" : "04b241785e961582b2076a2b0e2ef2bb1939befc",
+         "name" : "Веломир",
+         "opening_hours" : {
+            "open_now" : true,
+            "weekday_text" : []
+         },
+         "photos" : [
+            {
+               "height" : 1872,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/106405808517260244423/photos\"\u003eМаксим Кудрявцев\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAIwP6Byq4vOdJPreFn5qNDlzdGbBJ454IYLtqfLcCWDAGHUXJJy2Y-7QN5eMx2Sg_qjR83p9Kkno9BCRK_I9agD6hGLgqzUruZ7IQmAGpjbzhMJEu_eSdG5TaR_Xk9KmHEhAvHNQLfGQsjRRMEO7LKSnEGhTlq3At_6Zxtq0xSnmAFx68brQWUQ",
+               "width" : 3328
+            }
+         ],
+         "place_id" : "ChIJp_g31dji20ARc7pGL2AKwj4",
+         "rating" : 4.7,
+         "reference" : "CmRRAAAAxseUi0pIVI74DuHz2xfFjTbSkOX7ilPM1v2Hsztbha2xiP98s3caeNO0mzikl3GQDCt7hw-DcaSG_Adf9BJ3uZ1NHUoSYZfTu_3pRIHIPF43sgEEtyUa7iYwIIIYnr3aEhB4Wa8aldEa8DvLw8JzEh2oGhSUa2KUxwsDzikmkhzttF8ik3JQLg",
+         "scope" : "GOOGLE",
+         "types" : [ "bicycle_store", "store", "point_of_interest", "establishment" ],
+         "vicinity" : "Виконкомівська вул., 21, Дніпро́"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 48.4602329,
+               "lng" : 35.0494397
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.46163183029149,
+                  "lng" : 35.0507019302915
+               },
+               "southwest" : {
+                  "lat" : 48.4589338697085,
+                  "lng" : 35.0480039697085
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "f437fbf692498957c5da908a19077f6d32314b26",
+         "name" : "Центр обслуговування абонентів з експертом life:)",
+         "opening_hours" : {
+            "open_now" : false,
+            "weekday_text" : []
+         },
+         "photos" : [
+            {
+               "height" : 3984,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/114184104846580236366/photos\"\u003eViktor Matros\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAQkk2j1DqDVge8xi5Onp2ILl-FAIcVLa3a9nshTL7FYeBZyZDCJVt3q7oCnxTDVvcmeUjg6GoYv9rs5tPr6b1Cc8EOJs4rk9q1RtxjDqEh2wGalt1lLsPtb471vjprn7-EhB93ixIMz0IJwXtxtRQtQbiGhSgt_Zh2Y4ftQlfv_YxX0aIzBB5pg",
+               "width" : 5312
+            }
+         ],
+         "place_id" : "ChIJO6IXpt7i20AR0Vab9JiID7k",
+         "rating" : 4.4,
+         "reference" : "CmRSAAAAe-oMbmk1vfXSkstujWB9YyB2I3z0fGlGPlEuTX7oQh_-1PBKrI690x_AjIZqjJLTOGOvV_4GhK75fmWAzudcnh5Q9KZ6ZzLIGPFq8gJhFI1nYMkLG_N-p7fneRH-ios3EhAvQGtlMwqmdut27dJ6XWXRGhT7fCw3CRe8Rv4u5guyJIeBWTl3MA",
+         "scope" : "GOOGLE",
+         "types" : [ "point_of_interest", "establishment" ],
+         "vicinity" : "вулиця Виконкомівська, 7, Дніпро́"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 48.4594969,
+               "lng" : 35.0444082
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.46067418029151,
+                  "lng" : 35.0460984802915
+               },
+               "southwest" : {
+                  "lat" : 48.45797621970851,
+                  "lng" : 35.0434005197085
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "972519b8fe24b7944f640a65677ba7f7239e333c",
+         "name" : "Адвокат в Днепропетровске Дорохин Виталий Игоревич",
+         "place_id" : "ChIJacC6Vd7i20ARmbwXrPWBTfk",
+         "rating" : 5,
+         "reference" : "CmRSAAAAR0eXdjGB-Jd-uk8lDFgdjoiS4WJoIYoWK8Cf_9aa08y4LFG4olbTozJkHQNPMwfYTu23BISvK2AeEzhldBKfxoQhmmidFKzJv3yrBq4MduScfJ4cCDaIauDMYu4yGoWuEhAKBW1aVyeItsXeIqWHL1uKGhQPi2_dTkvgk1NP8MHSP9BTJeHAJg",
+         "scope" : "GOOGLE",
+         "types" : [ "point_of_interest", "establishment" ],
+         "vicinity" : "вулиця Січових Стрільців, 14, Дніпро́"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 48.459746,
+               "lng" : 35.0463
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.4611401302915,
+                  "lng" : 35.0477039802915
+               },
+               "southwest" : {
+                  "lat" : 48.4584421697085,
+                  "lng" : 35.0450060197085
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "6d3e73cdccf947cb523cc18126dd98b7bbac87c8",
+         "name" : "ООО «Полипром»",
+         "opening_hours" : {
+            "open_now" : false,
+            "weekday_text" : []
+         },
+         "photos" : [
+            {
+               "height" : 540,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/114651916175570906801/photos\"\u003eООО «Полипром»\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAr3uHUCrCdKQOxE-UDhsS305JYREguk0AYaXcWlMy_7dQ8ms8PpTsJOzvt3-wdv5znPKkumLKVWjKJdq1XIULG6S4l3Ha9pfx7DyvkPpia14f06f2kWt0zJhvlIgpgWboEhBk5o-r0TDQjcoZVP6o19QwGhQreQV4mWeRAABQtz3yAuP0gFmSsA",
+               "width" : 960
+            }
+         ],
+         "place_id" : "ChIJbdpm8t7i20ARQUzolSI-H6o",
+         "rating" : 5,
+         "reference" : "CmRSAAAA_LXQ-NbIofkvHnufs1Wsbp64s1HY7o5n6d7h5lMIdRH6MoDL81aA3slIHX2kBoBAfmOvcZL3WqAAeeQ4Le_6YfEG5XEL2LEa3KNtmPrKd-98FEhCD0TrEPkSyIhXvkUSEhBjT0KLV66N4793dC4CQ1o1GhRDGcJReZCUUY1POp_6z3UXHyAJJQ",
+         "scope" : "GOOGLE",
+         "types" : [ "point_of_interest", "establishment" ],
+         "vicinity" : "вулиця Старокозацька, 5, Дніпро́"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 48.461755,
+               "lng" : 35.04671
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.4631840302915,
+                  "lng" : 35.04816243029151
+               },
+               "southwest" : {
+                  "lat" : 48.4604860697085,
+                  "lng" : 35.04546446970851
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "78afa043c5a3c3d55e2fea42d6bb8159a6523e8e",
+         "name" : "Спорттайм Фітнес-клуб ПП Рублевська А.В.",
+         "place_id" : "ChIJgZFchOfi20ARqeR2fIEpJ7k",
+         "rating" : 5,
+         "reference" : "CmRSAAAAgcUpOraTi7RZBrXPHpQVI4obQXKGyDGs_9tESGoIOO8r-UHVHzOwP2aLKs7tlGIBPFefiejes6BwMlxwi0u_dft5xHwTGgY12T5nHg7wqJcLKkfbSEA8IDp9PiBR0zjaEhAe_YsEUJrliZVJZG4EBf_sGhRRK81GHhScLq5VgimH9XTJ-OkT0Q",
+         "scope" : "GOOGLE",
+         "types" : [ "point_of_interest", "establishment" ],
+         "vicinity" : "вулиця Шевченка, 59, Дніпро́"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 48.461755,
+               "lng" : 35.04671
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.4631840302915,
+                  "lng" : 35.04816243029151
+               },
+               "southwest" : {
+                  "lat" : 48.4604860697085,
+                  "lng" : 35.04546446970851
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "d0c924e616ba076960805732ffdc484fa4c958ee",
+         "name" : "Электролайт ООО",
+         "opening_hours" : {
+            "open_now" : false,
+            "weekday_text" : []
+         },
+         "place_id" : "ChIJn79_2t3i20AR6RduQrnhFZ0",
+         "rating" : 5,
+         "reference" : "CmRSAAAAwc5RKuDib8kbyhKc_8nahSf0lMdz7dAqtEOfjdWSmS5KL53vr2pR4Z_MIz41tBzx67l9RaFsLQzsddPmgyaleRijsrgfovzo2LHVNA8FG4XcP9iwcoCdm3y7whmUpvUPEhDdSgYUXOTcLWnTPGx4NH_7GhSv_t1a0p0GF2ygOl7Z6S67Iez18w",
+         "scope" : "GOOGLE",
+         "types" : [ "point_of_interest", "establishment" ],
+         "vicinity" : "вулиця Шевченка, 59, Дніпро́"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 48.4551174,
+               "lng" : 35.0440299
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.45646638029149,
+                  "lng" : 35.04537888029149
+               },
+               "southwest" : {
+                  "lat" : 48.4537684197085,
+                  "lng" : 35.0426809197085
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "eb0dfc2a20595b7c5a731193493ee6ae1f05b08c",
+         "name" : "\"ГАРМОНИЯ КРАСОТЫ\" Центр инъекционной косметологии",
+         "opening_hours" : {
+            "open_now" : false,
+            "weekday_text" : []
+         },
+         "photos" : [
+            {
+               "height" : 960,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/116669027119066679187/photos\"\u003e&quot;ГАРМОНИЯ КРАСОТЫ&quot; Центр инъекционной косметологии\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAJxsk1PJeITsPwMhgRrBO5fcPe_rPfc_JRrJYsk2inpMTWy2uGmbOzKTdPJqV4zotBdW2BDXmaANKog7EhVWvz_2_L_ir2tTBpIlGZ-rRIWzqzH-2FeygCr1-KZcPQ7lxEhCeV9IMGovsyhJng-SwH8qNGhQMFFAWvFCSX4-6YlNlvTfVYuzPpw",
+               "width" : 716
+            }
+         ],
+         "place_id" : "ChIJG_IMSifj20ARxXHt_s71WsQ",
+         "rating" : 5,
+         "reference" : "CmRSAAAAZ08MOHrDOA_TqjzBW8AZPvKTdIfJ8O6ErchTiXM9OXFdpa79ChoRJHk0neK1EpqtYRjoXxbWw-occs4QBsCLkJC7iePwBQPddOaIt5mSo3pfSky9Rc3boicGbtRqDx5PEhCkgKidlsr-ODmjoEDIxeUmGhT-ycLlEOAHP6WytSOgLDxPSGcQvw",
+         "scope" : "GOOGLE",
+         "types" : [ "health", "point_of_interest", "establishment" ],
+         "vicinity" : "Бородинская ул., 16, Дніпро́"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 48.46021390000001,
+               "lng" : 35.0426676
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.46140803029149,
+                  "lng" : 35.04430148029149
+               },
+               "southwest" : {
+                  "lat" : 48.4587100697085,
+                  "lng" : 35.0416035197085
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "33cb4a786a79da2033c57dda63bb99e11bbcba51",
+         "name" : "LeoGym",
+         "opening_hours" : {
+            "open_now" : true,
+            "weekday_text" : []
+         },
+         "photos" : [
+            {
+               "height" : 2048,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/105483990332190700454/photos\"\u003eDaryna Daryna\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRZAAAA6jdh02iQFTCqVh53tMnVZW_cvFsownaszzOa0IPZSlRQEk6gte5n1wGL4qpy5fUJwRvNU5UWRUvhJK4tcVbf7EPTDIqy8glx4q_P1ES5zaOu0KZ1r44PuGDZYO1cRHfDEhBC_6f2VhvlyMr_Uz1VySsCGhR1fVnQnpvjb9i9rKvHfNpA-NRNag",
+               "width" : 1152
+            }
+         ],
+         "place_id" : "ChIJ-2u5Nt7i20ARmCJ6EL5lcFc",
+         "rating" : 4.3,
+         "reference" : "CmRRAAAAEqVNU42djcZxgoAijkNlwgfOsM3qMyAYPOpXXnC233svx3F0p4nz1_o8MAuK8hrG3hbdDZRcpEW0rpgxpOiMVSHTaJsTdauM-3nud1tYSpYcDYWmUUYE5zfu7WYwesgiEhATL98EDQA57MwdCalx3K2wGhTFT5mleg7rwEkcDDGvb1ZJ3iYmAA",
+         "scope" : "GOOGLE",
+         "types" : [ "gym", "health", "point_of_interest", "establishment" ],
+         "vicinity" : "вулиця Михайла Грушевського, 10, Дніпро́"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 48.460328,
+               "lng" : 35.04897539999999
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.4618039302915,
+                  "lng" : 35.05048618029149
+               },
+               "southwest" : {
+                  "lat" : 48.4591059697085,
+                  "lng" : 35.04778821970849
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "008b69282c7b8563ca39c33109a98771e165c382",
+         "name" : "Учебный Центр Luxoft",
+         "place_id" : "ChIJZ-u-oN7i20ARut3qTfLFXO8",
+         "rating" : 5,
+         "reference" : "CmRSAAAAY6Eq9q7AhZntuJ8NVn2jjCFDgnupizIYYRPV6hGPVgf81FTP7uQyNY1pgHSZoNXiNcBkKJViiUyKpFV6MdtJw4Rk4MihK9I-rBVulh5rf3fankdrrEZRo44UbsOjYmVKEhBDmg5MkGcNosl08AKrTwMJGhRRFI9nc9BiHZQF0dVfjyV4_HcjxQ",
+         "scope" : "GOOGLE",
+         "types" : [ "point_of_interest", "establishment" ],
+         "vicinity" : "вулиця Шевченка, 53, Дніпро́"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 48.4615404,
+               "lng" : 35.0465776
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.46305298029149,
+                  "lng" : 35.0481379802915
+               },
+               "southwest" : {
+                  "lat" : 48.46035501970849,
+                  "lng" : 35.0454400197085
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "24e63b8adf9c9a2851b864cf962debdfb3ab7172",
+         "name" : "ООО НПК «Стройинвестпроект»",
+         "opening_hours" : {
+            "open_now" : false,
+            "weekday_text" : []
+         },
+         "place_id" : "ChIJgZFchOfi20ARVDVYb042ufw",
+         "reference" : "CmRSAAAAvLzNUTUl5Z1a_AsduMKvfPaBPyjpGYUvS7n2smEuI2xTRp2q9-DyvtL17mfCN3vQL7q1b-Xhhtn4-sPLu1AfkHfIl9iRPgDNinIj76FRB4Np6IirsvmUhQ-YKVbsChmAEhAP6Y2zqHus49EWqSTpRjG-GhRRQV0j4kelaAEeE6Lp5OQ0Fg8SUA",
+         "scope" : "GOOGLE",
+         "types" : [ "point_of_interest", "establishment" ],
+         "vicinity" : "вулиця Шевченка, 59, Дніпро́"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 48.457185,
+               "lng" : 35.0431419
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.4586024302915,
+                  "lng" : 35.0443665302915
+               },
+               "southwest" : {
+                  "lat" : 48.4559044697085,
+                  "lng" : 35.0416685697085
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "f5f1c2d2526c80dbd8206af018b9ea533c2e0983",
+         "name" : "Flash Studio Компанія ПП Гавриленко О.В.",
+         "place_id" : "ChIJMwCMY9_i20ARadNxTNTgEaE",
+         "rating" : 4.5,
+         "reference" : "CmRSAAAAs_uJbKileBBrRD9tae3z1_sYcTO6YnzuiqMDNfinbdtt0lXe0BtQwds2VKWqXiczai3iQV2d19GZ628ZVTuYb8qR1EL5giF3awOm2iukZG2mTpVqMXMm9uj8Q6QwdptJEhBUOmxcwFnBrhBeRTnyOPkEGhTjYcGQH9rw-qYzhuCXtDFNfdJUGw",
+         "scope" : "GOOGLE",
+         "types" : [ "point_of_interest", "establishment" ],
+         "vicinity" : "вулиця Січових Стрільців, 23, Дніпро́"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 48.45753999999999,
+               "lng" : 35.04699799999999
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.45888898029149,
+                  "lng" : 35.04834698029149
+               },
+               "southwest" : {
+                  "lat" : 48.45619101970849,
+                  "lng" : 35.0456490197085
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/shopping-71.png",
+         "id" : "57682d18397d8e5c984725e88bd00ecaed5e852b",
+         "name" : "Автодрайв",
+         "opening_hours" : {
+            "open_now" : false,
+            "weekday_text" : []
+         },
+         "photos" : [
+            {
+               "height" : 3328,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/106405808517260244423/photos\"\u003eМаксим Кудрявцев\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAZEhT2ID24Xuz1q9fC7XfB1JO0PaoKlSS7hdxchVes-lDG9YU2skUdSZ60UNmFcB3Ws9yadcxb7hV9-wDAbnAwHxl8xiwM_O8DpGJ0JlkKK40_7SbUCiFJRheFeXm_bShEhDOO8fXYIMXxR8L6LNtLol4GhQVNktkOY4qmsknAbf8SSyoFthvjA",
+               "width" : 1872
+            }
+         ],
+         "place_id" : "ChIJS1OGy9ji20ARYXTw19IkVAc",
+         "rating" : 4,
+         "reference" : "CmRRAAAAvkGqrVbqx8kIY0R9usE91DgVAtEFpKz4hE1owy-KBbXwVE0HYKt6i9S3poWkARGvYdszlyeZU-Bn2ryijUkk6EfWo8gCshBovJMgZ0VzR5VNRKDmlcyQm-xeKXgfKqZjEhDm3THQjNvGZD5w1tON007gGhTRvHajKLCwsRA9a0-RAj5QBP_6GA",
+         "scope" : "GOOGLE",
+         "types" : [
+            "storage",
+            "car_repair",
+            "store",
+            "point_of_interest",
+            "establishment"
+         ],
+         "vicinity" : "вул. Виконкомівська, 24А, Дніпро́"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 48.461287,
+               "lng" : 35.047012
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.4625219802915,
+                  "lng" : 35.04857173029149
+               },
+               "southwest" : {
+                  "lat" : 48.4598240197085,
+                  "lng" : 35.04587376970849
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/atm-71.png",
+         "id" : "a9b4587e77cd8cb0eab0c1d9f6b8c1b7bc8ee40f",
+         "name" : "Rayffayzen Bank Aval'",
+         "opening_hours" : {
+            "open_now" : false,
+            "weekday_text" : []
+         },
+         "place_id" : "ChIJleJbx-Xi20ARhnJxDyd6AGc",
+         "rating" : 3,
+         "reference" : "CmRRAAAAffVFCwWuh9ZbxLv275HGlWXcOAb6rujBzc2lOdBhJtrH81ClsRXEo7vff9ohfcO_WN9NOOWyxN8yN-elJ1mWSawl9mS_SoENfEufAQp8V1JSGSwJ7vDy0IKu3qehS-Y1EhCZwFWzSk64Uzg-H68Mo3ftGhSDnDghaEN14Ei-YiVdsRNJ0bmAKQ",
+         "scope" : "GOOGLE",
+         "types" : [ "atm", "bank", "finance", "point_of_interest", "establishment" ],
+         "vicinity" : "вулиця Січових Стрільців, 4, місто Дніпропетровськ"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 48.456952,
+               "lng" : 35.042116
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.4582329802915,
+                  "lng" : 35.0435932802915
+               },
+               "southwest" : {
+                  "lat" : 48.4555350197085,
+                  "lng" : 35.0408953197085
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "5b9e110cb903b209fc98811d7942f305ef137592",
+         "name" : "Ван Пур Автомагазин",
+         "opening_hours" : {
+            "open_now" : false,
+            "weekday_text" : []
+         },
+         "place_id" : "ChIJdc8NgyDj20ARXPKQaRRiMT4",
+         "rating" : 4.7,
+         "reference" : "CmRRAAAAewkH7tahPszwBa-e04ddY4ov9PDoAWz2_uScvXHtJcs6T8EfgAW0gMz1GEOZZamNS6eeKJMRxUo0LpWcJ71p59bV9zwpv-pPuc-IjFgQwitbeaQSJgXXgX_4Ah9UcwZ1EhCiau9zBa-kjRPZUNT1RESVGhTZsdf7bo1PvPJLmsa0MlQr47dJIQ",
+         "scope" : "GOOGLE",
+         "types" : [ "point_of_interest", "establishment" ],
+         "vicinity" : "вулиця Січових Стрільців, 28, Дніпро́"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 48.4365564,
+               "lng" : 35.06857000000001
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.479856,
+                  "lng" : 35.1242051
+               },
+               "southwest" : {
+                  "lat" : 48.386354,
+                  "lng" : 35.0227659
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/geocode-71.png",
+         "id" : "5c6b0451a503c8ca615d0aa611f7180956fe05a2",
+         "name" : "Соборный район",
+         "photos" : [
+            {
+               "height" : 3456,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/104596437944350049514/photos\"\u003eАндрей Городецких\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAA6bAM6Q2reMzHJOYQpsaf4zhUoSgmSM4NxoMIS0g6dpcLe6c9Bb8sl06Q95uN6uYNsEIwNbQuBK57R2_r1k_phmMrKfzu6VsTmr_KEKoKv2n2JrLT2D2HPjxkPhXn8iHeEhBr07JKWbGObxJgQIfs9SDhGhReNn-LHzKOf9YJXYxzWWT3mt0tcQ",
+               "width" : 4608
+            }
+         ],
+         "place_id" : "ChIJhznuocT820ARnsm3O20O048",
+         "reference" : "CmRbAAAA7RYEd09rNCABjJhooq7gYXTXd3JUBuiJrHuinx59kN1eTPRRe-Z6pslP04Eo1TQGX9UYWNTKV66-MCL-zQNrtRURq6tZHa5K_iamQY7r3jvN-Lnq6_dCUyABz23A4gZCEhAltL6ZAfmsUqOaqpm4hAV2GhRadJ5IlXmjME8Qgi6zZ5gXpP1YpA",
+         "scope" : "GOOGLE",
+         "types" : [ "sublocality_level_1", "sublocality", "political" ],
+         "vicinity" : "Соборный район"
+      }
+   ],
+   "status" : "OK"
+   }

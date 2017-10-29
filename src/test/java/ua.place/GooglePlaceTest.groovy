@@ -10,7 +10,7 @@ import org.junit.Test
  */
 class GooglePlaceTest {
     GooglePlace googlePlace
-    final FILE_NAME = "testData"
+    final FILE_NAME = "src/main/resources/testData"
     def json
 
     @Before
