@@ -23,20 +23,20 @@ class GooglePlaceTest {
     @Test
     void testEmptyLimit() {
         googlePlace.result = []
-        Assert.assertEquals(0, googlePlace.limit(1).getResult().size())
+        Assert.assertEquals(0, googlePlace.limit(1).loadResult().size())
     }
 
     @Test
     void testEqualLimit() {
         googlePlace.result = json.results
-        Assert.assertEquals(3, googlePlace.limit(3).getResult().size())
+        Assert.assertEquals(3, googlePlace.limit(3).loadResult().size())
 
     }
 
     @Test
     void testLessThenLimit() {
         googlePlace.result = json.results
-        Assert.assertEquals(20, googlePlace.limit(50).getResult().size())
+        Assert.assertEquals(20, googlePlace.limit(50).loadResult().size())
     }
 
     @Test
