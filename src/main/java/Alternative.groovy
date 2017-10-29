@@ -1,28 +1,27 @@
 import groovyx.net.http.HTTPBuilder
-import ua.place.GooglePlace
 import ua.place.Place
 
 import static groovyx.net.http.ContentType.JSON
 import static groovyx.net.http.Method.GET
 
-def baseUrl = 'https://maps.googleapis.com'
-def nearBySearchUri = '/maps/api/place/nearbysearch/json'
-def detailsUri = '/maps/api/place/details/json'
-def radius = 500
-def key = "AIzaSyBpLk-GrkZy8N599XaP9RTsBl-kGNr2Fpg"
-def language = "en"
-def pause = 2000
-def BigDecimal latitude = 48.45925
-def BigDecimal longitude = 35.04497
+baseUrl = 'https://maps.googleapis.com'
+nearBySearchUri = '/maps/api/place/nearbysearch/json'
+detailsUri = '/maps/api/place/details/json'
+radius = 500
+key = "AIzaSyBpLk-GrkZy8N599XaP9RTsBl-kGNr2Fpg"
+language = "en"
+pause = 2000
+BigDecimal latitude = 48.45925
+BigDecimal longitude = 35.04497
 
-def lastRequestTimestamp = 0
-def hasRemoutePage = true
-def pages = [] //список страниц json
-def currentIndex = -1
-def http = new HTTPBuilder(baseUrl)
+lastRequestTimestamp = 0
+hasRemoutePage = true
+pages = [] //список страниц json
+currentIndex = -1
+http = new HTTPBuilder(baseUrl)
 
 //Считываем следующую страницу
-def request = {
+request = {
     if (currentIndex < pages.size() - 1) { //Есть ли последующие записи
         currentIndex++
     } else {
@@ -66,19 +65,39 @@ def request = {
     }
 }
 
+//Получаем дополнительные данные объекта
+requestDetails = { place ->
+    http.request(GET, JSON) {
+        uri.path = detailsUri //uri place detail
+        uri.query = [placeid : place.placeId,
+                     key     : key,
+                     language: language]
+
+        response.success = { resp, json ->
+            assert resp.status == 200
+            place.detail.rating = json.result.rating
+            place.detail.icon = json.result.icon
+        }
+
+        response.'404' = { resp ->
+            println 'Not found'
+        }
+    }
+}
+
 //прерывание скрипта
-def interrupt={message->
+interrupt = { message ->
     println message
     System.exit(0)
 }
 //расчет дистанции
-def distance = { ltd, lgt ->
+distance = { ltd, lgt ->
     Math.sqrt(Math.pow((Math.abs(latitude) - Math.abs(ltd as BigDecimal)), 2) + Math.pow((Math.abs(longitude) - Math.abs(lgt as BigDecimal)), 2))
 }
 /** ***********************/
 
 //Парсим JSON
-def parsePlace = { it ->
+parsePlace = { it ->
     def lat = it.geometry.location.lat
     def lng = it.geometry.location.lng
     def place = new Place();
@@ -94,7 +113,7 @@ def parsePlace = { it ->
 }
 
 //Получить все страницы
-def searchAll = {
+searchAll = {
     def result = []
     pages.each {
         if (it.status != 'OK') interrupt(it.status)
@@ -105,7 +124,7 @@ def searchAll = {
 /** *************************/
 
 //Получить текущую страницу
-def searchOne = {
+searchOne = {
     def result = []
     if (pages[currentIndex].status != 'OK') interrupt(pages[currentIndex].status)
     pages[currentIndex].results.each { result << parsePlace(it) }
@@ -114,7 +133,7 @@ def searchOne = {
 /** *************************/
 
 //Получение предыдущей страницы
-def previos = {
+previos = {
     if (currentIndex > 0) {
         currentIndex--
     }
@@ -122,7 +141,7 @@ def previos = {
 /** *************************/
 
 //Компаратор для сравнения полей
-def comparator = { attribute, a, b ->
+comparator = { attribute, a, b ->
     def aValue = a.getProperty(attribute)
     def bValue = b.getProperty(attribute)
 
@@ -138,14 +157,14 @@ def comparator = { attribute, a, b ->
 /** ***********************/
 
 //сортировка по полю
-def sortedByField = { result, field ->
+sortedByField = { result, field ->
     result.sort(comparator.curry(field))
     result
 }
 /** ***********************/
 
 //Фильтрация по типу
-def filterByType = { list, field ->
+filterByType = { list, field ->
     def result = []
     list.each {
         if (field == it.types.find { it == field }) {
@@ -157,17 +176,15 @@ def filterByType = { list, field ->
 /** ************************/
 
 //Ограничение результата
-def limit = { list, count ->
-    def result = []
+limit = { list, count ->
     (count > list.size()) ?: list.size()
     result = list.take(count)
-    result
 }
 /** ************************/
 
 //Получаем дополнительные данные объекта
-def loadDetails = { place ->
-     http.request(GET, JSON) {
+loadDetails = { place ->
+    http.request(GET, JSON) {
         uri.path = detailsUri //uri place detail
         uri.query = [placeid : place.placeId,
                      key     : key,
@@ -189,9 +206,9 @@ def loadDetails = { place ->
 
 request()
 request()
-def reached = searchAll()
-def sorted = sortedByField(reached, "distance")
-def result = limit(sorted, 10)
+reached = searchAll()
+sorted = sortedByField(reached, "distance")
+result = limit(sorted, 10)
 assert result[0] instanceof Place
-GooglePlace.requestDetails(result[0] as Place)
+requestDetails(result[0] as Place)
 println result[0]

@@ -2,8 +2,6 @@ import ua.place.GooglePlace
 import ua.place.NotReceivedException
 import ua.place.Place
 
-//def test=[new Place(id:2,name:"one"),new Place(id:4,name:"two"),new Place(id:1,name:"check")]
-googlePlace = new GooglePlace(latitude: 48.45925, longitude: 35.04497)
 def printResult={result->
     result.each{
         assert it instanceof Place
@@ -12,6 +10,7 @@ def printResult={result->
 }
 
 try {
+    def googlePlace = new GooglePlace(latitude: 48.45925, longitude: 35.04497)
     def result = googlePlace.
             request().
             request().

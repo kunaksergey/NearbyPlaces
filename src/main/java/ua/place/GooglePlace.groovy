@@ -16,14 +16,14 @@ class GooglePlace {
     private final static LANGUAGE = "en"
     private final static PAUSE = 2000
 
-    private def radius = DEFAULT_RADIUS
-    private BigDecimal latitude
-    private BigDecimal longitude
-    private def lastRequestTimestamp = 0
-    private def hasRemoutePage = true
-    private def pages = [] //список страниц json
-    private def currentIndex = -1
-    private def result = [] //результат-list Places
+    private radius = DEFAULT_RADIUS
+    private latitude
+    private longitude
+    private lastRequestTimestamp = 0
+    private hasRemoutePage = true
+    private pages = [] //список страниц json
+    private currentIndex = -1
+    private result = [] //результат-list Places
     def http = new HTTPBuilder(BASE_URL)
     //Считываем следующую страницу
     def request() {
@@ -73,7 +73,7 @@ class GooglePlace {
 
     //Получить все страницы
     def searchAll() throws NotReceivedException {
-        def list = []
+        List list = []
         pages.each {
             if (it.status != 'OK') throw new NotReceivedException(it.status)
             it.results.each { list << parsePlace(it) }
@@ -84,7 +84,7 @@ class GooglePlace {
 
     //Получить текущую страницу
     def searchOne() throws NotReceivedException {
-        def list = []
+        List list = []
         if (pages[currentIndex].status != 'OK') throw new NotReceivedException(pages[currentIndex].status)
         pages[currentIndex].results.each { list << parsePlace(it) }
         result = list
@@ -121,7 +121,7 @@ class GooglePlace {
 
     //Фильтрация по типу
     def filterByType(field) {
-        def list = []
+        List list = []
         result.each {
             if (field == it.types.find { it == field }) {
                 list << it
@@ -144,22 +144,22 @@ class GooglePlace {
     }
 
     //Парсим JSON
-    private def parsePlace(it) {
+    private def parsePlace(itPlace) {
         //Расчет дистанции
         def distance = { ltd, lgt ->
-            Math.sqrt(Math.pow((Math.abs(latitude) - Math.abs(ltd as BigDecimal)), 2) + Math.pow((Math.abs(longitude) - Math.abs(lgt as BigDecimal)), 2))
+            Math.sqrt(Math.pow((Math.abs(latitude as BigDecimal) - Math.abs(ltd as BigDecimal)), 2) + Math.pow((Math.abs(longitude as BigDecimal) - Math.abs(lgt as BigDecimal)), 2))
         }
-        def lat = it.geometry.location.lat
-        def lng = it.geometry.location.lng
+        def lat = itPlace.geometry.location.lat
+        def lng = itPlace.geometry.location.lng
         def place = new Place();
-        place.id = it.id
-        place.name = it.name
-        place.placeId = it.place_id
-        place.vicinity = it.vicinity
+        place.id = itPlace.id
+        place.name = itPlace.name
+        place.placeId = itPlace.place_id
+        place.vicinity = itPlace.vicinity
         place.distance = distance(lat, lng)
         place.latitude = lat as BigDecimal
         place.longitude = lng as BigDecimal
-        place.types = it.types
+        place.types = itPlace.types
         place
     }
 
