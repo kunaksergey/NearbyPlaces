@@ -23,7 +23,7 @@ class GooglePlace {
     private hasRemoutePage = true
     private pages = [] //список страниц json
     private currentIndex = -1
-    private result = [] //результат-list Places
+    def result = [] //результат-list Places
     def http = new HTTPBuilder(BASE_URL)
     //Считываем следующую страницу
     def request() {
@@ -144,7 +144,7 @@ class GooglePlace {
     }
 
     //Парсим JSON
-    private def parsePlace(itPlace) {
+    def parsePlace(itPlace) {
         //Расчет дистанции
         def distance = { ltd, lgt ->
             Math.sqrt(Math.pow((Math.abs(latitude as BigDecimal) - Math.abs(ltd as BigDecimal)), 2) + Math.pow((Math.abs(longitude as BigDecimal) - Math.abs(lgt as BigDecimal)), 2))

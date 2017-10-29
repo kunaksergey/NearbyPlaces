@@ -8,12 +8,20 @@
     <artifactId>ProjectPlace</artifactId>
     <version>1.0-SNAPSHOT</version>
 <dependencies>
-    <!-- https://mvnrepository.com/artifact/org.codehaus.groovy.modules.http-builder/http-builder -->
+
     <!-- https://mvnrepository.com/artifact/org.codehaus.groovy.modules.http-builder/http-builder -->
     <dependency>
         <groupId>org.codehaus.groovy.modules.http-builder</groupId>
         <artifactId>http-builder</artifactId>
         <version>0.7.1</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/junit/junit -->
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.12</version>
+        <scope>test</scope>
     </dependency>
 
 
