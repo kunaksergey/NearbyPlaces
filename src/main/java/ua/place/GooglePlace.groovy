@@ -98,7 +98,9 @@ class GooglePlace {
                 else
                     return aValue.compareTo(bValue)
             }
+            if(result.size()!=0){
             result.sort(comparator)
+            }
         }
         this
     }
@@ -120,6 +122,7 @@ class GooglePlace {
     //Ограничение результата
     def limit(count) {
         listFunction << {
+
             (count > result.size()) ?: result.size()
             result = result.take(count)
         }

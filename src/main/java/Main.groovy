@@ -4,18 +4,18 @@ import ua.place.Place
 
 try {
     def googlePlace = new GooglePlace(latitude: 48.45925, longitude: 35.04497)
-    def result = googlePlace.
+    def place = googlePlace.
             request().
             request().
             request().
             sortedByField("distance").
-            filterByType("gym").
+          //  filterByType("gym").
             limit(1).
             loadResult()
 
-    assert result[0] instanceof Place
-    googlePlace.requestDetails(result[0] as Place)
-    printResult(result)
+    assert place[0] instanceof Place
+    googlePlace.requestDetails(place[0] as Place)
+    printResult(place)
 } catch (NotReceivedException e) {
     println e.message
 }
