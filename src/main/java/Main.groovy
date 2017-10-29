@@ -2,21 +2,14 @@ import ua.place.GooglePlace
 import ua.place.NotReceivedException
 import ua.place.Place
 
-def printResult={result->
-    result.each{
-        assert it instanceof Place
-        println "${it.name}:(${it.vicinity}):${it.types}\n"
-    }
-}
-
 try {
     def googlePlace = new GooglePlace(latitude: 48.45925, longitude: 35.04497)
     def result = googlePlace.
             request().
             request().
             request().
-            searchAll().
             sortedByField("distance").
+            filterByType("gym").
             limit(1).
             loadResult()
 
@@ -25,6 +18,14 @@ try {
     printResult(result)
 } catch (NotReceivedException e) {
     println e.message
+}
+
+/*********************/
+def printResult(result){
+    result.each{
+        assert it instanceof Place
+        println "${it.name}:(${it.vicinity}):${it.types}\n"
+    }
 }
 
 

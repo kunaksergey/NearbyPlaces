@@ -22,14 +22,12 @@ class GooglePlace {
     private lastRequestTimestamp = 0
     private hasRemoutePage = true
     private pages = [] //список страниц json
-    private currentIndex = -1
     def result = [] //результат-list Places
+    def listFunction = []
     def http = new HTTPBuilder(BASE_URL)
     //Считываем следующую страницу
     def request() {
-        if (currentIndex < pages.size() - 1) { //Есть ли последующие записи
-            currentIndex++
-        } else {
+        listFunction << {
             if (!hasRemoutePage) {
                 return this
             }
@@ -56,7 +54,6 @@ class GooglePlace {
                 response.success = { resp, json ->
                     assert resp.status == 200
                     pages << json
-                    currentIndex++
                     if (json.next_page_token == null) {
                         hasRemoutePage = false
                     }
@@ -67,79 +64,71 @@ class GooglePlace {
                 }
             }
             lastRequestTimestamp = System.currentTimeMillis()
+            processAll()
         }
         this
     }
 
     //Получить все страницы
-    def searchAll() throws NotReceivedException {
+    private def processAll() throws NotReceivedException {
         List list = []
         pages.each {
             if (it.status != 'OK') throw new NotReceivedException(it.status)
             it.results.each { list << parsePlace(it) }
         }
         result = list
-        this
-    }
 
-    //Получить текущую страницу
-    def searchOne() throws NotReceivedException {
-        List list = []
-        if (pages[currentIndex].status != 'OK') throw new NotReceivedException(pages[currentIndex].status)
-        pages[currentIndex].results.each { list << parsePlace(it) }
-        result = list
-        this
-    }
-
-    //Получение предыдущей страницы
-    def previos() {
-        if (currentIndex > 0) {
-            currentIndex--
-        }
         this
     }
 
     //сортировка по полю
     def sortedByField(field) {
-        //Компаратор для сравнения полей
-        def comparator = { a, b ->
-            def aValue = a.getProperty(field)
-            def bValue = b.getProperty(field)
+        listFunction << {
+            //Компаратор для сравнения полей
+            def comparator = { a, b ->
+                def aValue = a.getProperty(field)
+                def bValue = b.getProperty(field)
 
-            if (!aValue && !bValue)
-                return 0
-            else if (!aValue)
-                return -1
-            else if (!bValue)
-                return 1
-            else
-                return aValue.compareTo(bValue)
+                if (!aValue && !bValue)
+                    return 0
+                else if (!aValue)
+                    return -1
+                else if (!bValue)
+                    return 1
+                else
+                    return aValue.compareTo(bValue)
+            }
+            result.sort(comparator)
         }
-        result.sort(comparator)
         this
     }
 
     //Фильтрация по типу
     def filterByType(field) {
-        List list = []
-        result.each {
-            if (field == it.types.find { it == field }) {
-                list << it
+        listFunction << {
+            List list = []
+            result.each {
+                if (field == it.types.find { it == field }) {
+                    list << it
+                }
             }
+            result = list
         }
-        result = list
         this
     }
 
     //Ограничение результата
     def limit(count) {
-        (count > result.size()) ?: result.size()
-        result = result.take(count)
+        listFunction << {
+            (count > result.size()) ?: result.size()
+            result = result.take(count)
+        }
         this
     }
 
     //Возвращаем результат
     def loadResult() {
+        listFunction.each { it() }
         result
     }
 
@@ -163,10 +152,9 @@ class GooglePlace {
         place
     }
 
-
     //Получаем дополнительные данные объекта
-     def requestDetails(Place place) {
-          http.request(GET, JSON) {
+    def requestDetails(Place place) {
+        http.request(GET, JSON) {
             uri.path = DETAILS_URI //uri place detail
             uri.query = [placeid : place.placeId,
                          key     : KEY,
