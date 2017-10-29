@@ -19,9 +19,10 @@ def lastRequestTimestamp = 0
 def hasRemoutePage = true
 def pages = [] //список страниц json
 def currentIndex = -1
+def http = new HTTPBuilder(baseUrl)
 
 //Считываем следующую страницу
-def next = {
+def request = {
     if (currentIndex < pages.size() - 1) { //Есть ли последующие записи
         currentIndex++
     } else {
@@ -34,7 +35,7 @@ def next = {
             sleep(p as long)//засыпаем если между запросами меньше PAUSE
         }
 
-        def http = new HTTPBuilder(baseUrl)
+
         http.request(GET, JSON) {
             uri.path = nearBySearchUri //uri near places
             def keyMap = [key     : key,
@@ -166,9 +167,7 @@ def limit = { list, count ->
 
 //Получаем дополнительные данные объекта
 def loadDetails = { place ->
-    def http = new HTTPBuilder(baseUrl)
-
-    http.request(GET, JSON) {
+     http.request(GET, JSON) {
         uri.path = detailsUri //uri place detail
         uri.query = [placeid : place.placeId,
                      key     : key,
@@ -188,11 +187,11 @@ def loadDetails = { place ->
 
 
 
-next()
-next()
+request()
+request()
 def reached = searchAll()
 def sorted = sortedByField(reached, "distance")
 def result = limit(sorted, 10)
 assert result[0] instanceof Place
-GooglePlace.loadDetails(result[0] as Place)
+GooglePlace.requestDetails(result[0] as Place)
 println result[0]

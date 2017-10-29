@@ -23,10 +23,10 @@ class GooglePlace {
     private def hasRemoutePage = true
     private def pages = [] //список страниц json
     private def currentIndex = -1
-    private def result=[] //результат-list Places
-
+    private def result = [] //результат-list Places
+    def http = new HTTPBuilder(BASE_URL)
     //Считываем следующую страницу
-    def next() {
+    def request() {
         if (currentIndex < pages.size() - 1) { //Есть ли последующие записи
             currentIndex++
         } else {
@@ -39,7 +39,7 @@ class GooglePlace {
                 sleep(p as long)//засыпаем если между запросами меньше PAUSE
             }
 
-            def http = new HTTPBuilder(BASE_URL)
+
             http.request(GET, JSON) {
                 uri.path = NEAR_BY_SEARCH_URI //uri near places
 
@@ -101,23 +101,22 @@ class GooglePlace {
 
     //сортировка по полю
     def sortedByField(field) {
-        result.sort(comparator.curry(field))
+        //Компаратор для сравнения полей
+        def comparator = { a, b ->
+            def aValue = a.getProperty(field)
+            def bValue = b.getProperty(field)
+
+            if (!aValue && !bValue)
+                return 0
+            else if (!aValue)
+                return -1
+            else if (!bValue)
+                return 1
+            else
+                return aValue.compareTo(bValue)
+        }
+        result.sort(comparator)
         this
-    }
-
-    //Компаратор для сравнения полей
-    private def comparator = { attribute, a, b ->
-        def aValue = a.getProperty(attribute)
-        def bValue = b.getProperty(attribute)
-
-        if (!aValue && !bValue)
-            return 0
-        else if (!aValue)
-            return -1
-        else if (!bValue)
-            return 1
-        else
-            return aValue.compareTo(bValue)
     }
 
     //Фильтрация по типу
@@ -139,11 +138,6 @@ class GooglePlace {
         this
     }
 
-    //Расчет дистанции
-    private def distance(ltd, lgt) {
-        Math.sqrt(Math.pow((Math.abs(latitude) - Math.abs(ltd as BigDecimal)), 2) + Math.pow((Math.abs(longitude) - Math.abs(lgt as BigDecimal)), 2))
-    }
-
     //Возвращаем результат
     def loadResult() {
         result
@@ -151,6 +145,10 @@ class GooglePlace {
 
     //Парсим JSON
     private def parsePlace(it) {
+        //Расчет дистанции
+        def distance = { ltd, lgt ->
+            Math.sqrt(Math.pow((Math.abs(latitude) - Math.abs(ltd as BigDecimal)), 2) + Math.pow((Math.abs(longitude) - Math.abs(lgt as BigDecimal)), 2))
+        }
         def lat = it.geometry.location.lat
         def lng = it.geometry.location.lng
         def place = new Place();
@@ -165,11 +163,10 @@ class GooglePlace {
         place
     }
 
-    //Получаем дополнительные данные объекта
-    static def loadDetails(Place place) {
-        def http = new HTTPBuilder(BASE_URL)
 
-        http.request(GET, JSON) {
+    //Получаем дополнительные данные объекта
+     def requestDetails(Place place) {
+          http.request(GET, JSON) {
             uri.path = DETAILS_URI //uri place detail
             uri.query = [placeid : place.placeId,
                          key     : KEY,
