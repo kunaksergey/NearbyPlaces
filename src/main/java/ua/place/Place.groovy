@@ -7,19 +7,17 @@ class Place {
     def vicinity
     def distance
     def types=[]
-    def BigDecimal latitude
-    def BigDecimal longitude
-    def Detail detail=new Detail()
+    BigDecimal latitude
+    BigDecimal longitude
+    Detail detail=new Detail()
 
     @Override
-    public String toString() {
-        return "Place{" +
-                "name=" + name +
+     String toString() {
+        return  "name=" + name +
                 ", vicinity=" + vicinity +
                 ", distance=" + distance +
                 ", types=" + types +
-                ", detail=" + detail +
-                '}';
+                ", detail=" + detail
     }
 
 
@@ -28,11 +26,11 @@ class Place {
         def icon
 
         @Override
-        public String toString() {
+         String toString() {
             return "Detail{" +
                     "rating=" + rating +
                     ", icon=" + icon +
-                    '}';
+                    '}'
         }
     }
 }

@@ -6,13 +6,10 @@ try {
     def googlePlace = new GooglePlace(latitude: 48.5123967, longitude: 35.0844862)
     def places = googlePlace.
             request().
-            request().
-            request().
             sortedByField("distance").
-          //  filterByType("gym").
-          //  limit(1).
+            limit(60).
+            //filterByType("store").
             loadResult()
-
     assert places[0] instanceof Place
     googlePlace.requestDetails(places[0] as Place)
     println places[0]

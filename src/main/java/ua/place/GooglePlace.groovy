@@ -12,6 +12,7 @@ class GooglePlace {
     private final static NEAR_BY_SEARCH_URI = '/maps/api/place/nearbysearch/json'
     private final static DETAILS_URI = '/maps/api/place/details/json'
     private final static DEFAULT_RADIUS = 500
+    private final static RECORD_ON_PAGE = 20
     private final static KEY = "AIzaSyBpLk-GrkZy8N599XaP9RTsBl-kGNr2Fpg"
     private final static LANGUAGE = "en"
     private final static PAUSE = 2000
@@ -23,50 +24,55 @@ class GooglePlace {
     private lastRequestTimestamp = 0
     private hasRemoutePage = true
     private pages = [] //список страниц json
-    def result = [] //результат-list Places
-    def listFunction = []
-    def http = new HTTPBuilder(BASE_URL)
+    private limitPages = 3
+    private result = [] //результат-list Places
+    private listFunction = []
+    private http = new HTTPBuilder(BASE_URL)
     //Считываем следующую страницу
     def request() {
-        listFunction << {
-            if (!hasRemoutePage) {
-                return this
-            }
-
-            def p = PAUSE - (System.currentTimeMillis() - lastRequestTimestamp)
-            if (p > 0) {
-                sleep(p as long)//засыпаем если между запросами меньше PAUSE
-            }
+        for (int i = 0; i < limitPages; i++) {
 
 
-            http.request(GET, JSON) {
-                uri.path = NEAR_BY_SEARCH_URI //uri near places
-
-                def keyMap = [key     : KEY,
-                              location: latitude + ',' + longitude,
-                              rankby  : distance,
-                              //radius:radius,
-                              language: LANGUAGE]
-                if (pages.size() > 0 && pages[pages.size() - 1].next_page_token != null) {
-                    keyMap << [pagetoken: pages[pages.size() - 1].next_page_token as String]
+            listFunction << {
+                if (!hasRemoutePage) {
+                    return this
                 }
 
-                uri.query = keyMap
+                def p = PAUSE - (System.currentTimeMillis() - lastRequestTimestamp)
+                if (p > 0) {
+                    sleep(p as long)//засыпаем если между запросами меньше PAUSE
+                }
 
-                response.success = { resp, json ->
-                    assert resp.status == 200
-                    pages << json
-                    if (json.next_page_token == null || json.next_page_token == '0') {
-                        hasRemoutePage = false
+
+                http.request(GET, JSON) {
+                    uri.path = NEAR_BY_SEARCH_URI //uri near places
+
+                    def keyMap = [key     : KEY,
+                                  location: latitude + ',' + longitude,
+                                  rankby  : distance,
+                                  //radius:radius,
+                                  language: LANGUAGE]
+                    if (pages.size() > 0 && pages[pages.size() - 1].next_page_token != null) {
+                        keyMap << [pagetoken: pages[pages.size() - 1].next_page_token as String]
+                    }
+
+                    uri.query = keyMap
+
+                    response.success = { resp, json ->
+                        assert resp.status == 200
+                        pages << json
+                        if (json.next_page_token == null || json.next_page_token == '0') {
+                            hasRemoutePage = false
+                        }
+                    }
+
+                    response.'404' = { resp ->
+                        println 'Not found'
                     }
                 }
-
-                response.'404' = { resp ->
-                    println 'Not found'
-                }
+                lastRequestTimestamp = System.currentTimeMillis()
+                processAll()
             }
-            lastRequestTimestamp = System.currentTimeMillis()
-            processAll()
         }
         this
     }
@@ -123,6 +129,8 @@ class GooglePlace {
 
     //Ограничение результата
     def limit(count) {
+
+        limitPages = (Math.ceil(count / RECORD_ON_PAGE)<=3)?Math.ceil(count / RECORD_ON_PAGE):3
         listFunction << {
 
             (count > result.size()) ?: result.size()
