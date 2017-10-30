@@ -2,19 +2,20 @@ package ua.place.service
 
 import ua.place.entity.Location
 import ua.place.entity.Place
+import ua.place.enumer.StatusCodeEnum
 import ua.place.exception.NotReceivedException
 
 class Parser {
     //Получить все страницы
     def userData
 
-    def parse() throws NotReceivedException {
+    def parsePages(listPages) throws NotReceivedException {
         List list = []
-        userData.pages.each {
-            if (it.status != 'OK') throw new NotReceivedException(it.status)
+        listPages.each {
+            if (it.status != StatusCodeEnum.OK as String) throw new NotReceivedException(it.status)
             it.results.each { list << parsePlace(it) }
         }
-        userData.listPlace=list
+        list
     }
 
     //Парсим JSON

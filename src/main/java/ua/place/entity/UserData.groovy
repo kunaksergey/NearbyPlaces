@@ -1,8 +1,8 @@
 package ua.place.entity
 
+import groovy.transform.Immutable
+
+@Immutable
 class UserData {
-  InсomeData incomeData
-  def pages=[]
-  def listPlace=[]
-  def log=new Log()
-}
+  List listJsonPages
+ }

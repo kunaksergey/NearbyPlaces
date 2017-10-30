@@ -6,12 +6,11 @@ import ua.place.exception.NotFieldException
 import ua.place.exception.NotTypeException
 
 class HandlerRecipient {
-    def userData
 
     //сортировка по полю
-    def sortedByField() {
-        if (userData.incomeData.sortedByField == null) {
-            return
+    def sortedByField(sortedBy, listForSorted) {
+        if (sortedBy == null) {
+            return listForSorted
         }
 
         try {
@@ -44,31 +43,21 @@ class HandlerRecipient {
     }
 
     //Фильтрация по типу
-    def filterByType() {
-        if (userData.incomeData.filterBy == null) {
-            return
+    def filterByType(filter, listForFilter) throws NotTypeException {
+        if (filter == null) {
+            return listForFilter
         }
 
-        try {
-            if (!(userData.incomeData.filterBy in Config.types)) {
-                throw new NotTypeException(Config.NOT_TYPE_MESSAGE)
-            }
-        }
-        catch (NotTypeException e) {
-            userData.log.listMessage << e.message
-            return
+        if (!(filter in Config.types)) {
+            throw new NotTypeException(Config.NOT_TYPE_MESSAGE)
         }
 
-        if (userData.incomeData.filterBy in Config.types) {
-            List list = []
-            userData.listPlace.each {
-                if (userData.incomeData.filterBy == it.types.find { it == userData.incomeData.filterBy }) {
-                    list << it
-                }
+        List list = []
+        listForFilter.each {
+            if (filter == it.types.find { it == filter }) {
+                list << it
             }
-            userData.listPlace = list
-        } else {
-            userData.log.listMessage << Config.NOT_TYPE_MESSAGE
         }
+        return list
     }
 }

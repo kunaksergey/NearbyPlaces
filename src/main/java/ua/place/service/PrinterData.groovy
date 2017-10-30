@@ -1,21 +1,24 @@
 package ua.place.service
 
-class PrinterData {
-    def userData
+import ua.place.config.Config
+import ua.place.entity.UserData
 
-    def printAll(){
-        userData.listPlace.each{
+class PrinterData {
+
+    def printAll(list){
+        if(list.size()==0 ){
+            return
+        }
+        list.each{
         println it
         }
     }
 
-    def printOne(){
-         println userData.listPlace[0]
-    }
-
-    def printLog(){
-        userData.log.listMessage.each{
-            println it
+    def printOne(place){
+        if(place==null){
+            println Config.NOT_DATA_MESSAGE
+            return
         }
+         println place
     }
 }
