@@ -1,4 +1,4 @@
-package ua.place
+package ua.place.entity
 
 class Place {
     def id
@@ -7,9 +7,8 @@ class Place {
     def vicinity
     def distance
     def types=[]
-    BigDecimal latitude
-    BigDecimal longitude
-    Detail detail=new Detail()
+    def location=new Location()
+    def detail=new Detail()
 
     @Override
      String toString() {
@@ -18,6 +17,7 @@ class Place {
                 ", distance=" + distance +
                 ", types=" + types +
                 ", detail=" + detail
+
     }
 
 

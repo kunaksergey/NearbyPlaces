@@ -1,6 +1,8 @@
 package ua.place
 
 import groovyx.net.http.HTTPBuilder
+import ua.place.entity.Place
+import ua.place.exception.NotReceivedException
 
 import static groovyx.net.http.ContentType.JSON
 import static groovyx.net.http.Method.GET
@@ -18,7 +20,6 @@ class GooglePlace {
     private final static PAUSE = 2000
 
     private radius = DEFAULT_RADIUS
-    private distance = 'distance'
     private latitude
     private longitude
     private lastRequestTimestamp = 0
@@ -49,7 +50,7 @@ class GooglePlace {
 
                     def keyMap = [key     : KEY,
                                   location: latitude + ',' + longitude,
-                                  rankby  : distance,
+                                  rankby  : 'distance',
                                   //radius:radius,
                                   language: LANGUAGE]
                     if (pages.size() > 0 && pages[pages.size() - 1].next_page_token != null) {
@@ -85,7 +86,6 @@ class GooglePlace {
             it.results.each { list << parsePlace(it) }
         }
         result = list
-
         this
     }
 

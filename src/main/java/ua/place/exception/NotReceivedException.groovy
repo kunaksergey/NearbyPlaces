@@ -1,4 +1,4 @@
-package ua.place
+package ua.place.exception
 
 /**
  * Created by sa on 28.10.17.
