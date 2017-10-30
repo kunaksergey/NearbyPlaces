@@ -6,7 +6,7 @@ import static groovyx.net.http.ContentType.JSON
 import static groovyx.net.http.Method.GET
 
 //https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyBpLk-GrkZy8N599XaP9RTsBl-kGNr2Fpg&radius=500&location=48.45925,35.04497
-//https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyBpLk-GrkZy8N599XaP9RTsBl-kGNr2Fpg&radius=500&location=48.45925,35.04497
+//https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyBpLk-GrkZy8N599XaP9RTsBl-kGNr2Fpg&rankby=distance&location=48.45925,35.04497
 class GooglePlace {
     private final static BASE_URL = 'https://maps.googleapis.com'
     private final static NEAR_BY_SEARCH_URI = '/maps/api/place/nearbysearch/json'
@@ -17,6 +17,7 @@ class GooglePlace {
     private final static PAUSE = 2000
 
     private radius = DEFAULT_RADIUS
+    private distance = 'distance'
     private latitude
     private longitude
     private lastRequestTimestamp = 0
@@ -43,7 +44,8 @@ class GooglePlace {
 
                 def keyMap = [key     : KEY,
                               location: latitude + ',' + longitude,
-                              radius  : radius,
+                              rankby  : distance,
+                              //radius:radius,
                               language: LANGUAGE]
                 if (pages.size() > 0 && pages[pages.size() - 1].next_page_token != null) {
                     keyMap << [pagetoken: pages[pages.size() - 1].next_page_token as String]
@@ -54,7 +56,7 @@ class GooglePlace {
                 response.success = { resp, json ->
                     assert resp.status == 200
                     pages << json
-                    if (json.next_page_token == null) {
+                    if (json.next_page_token == null||json.next_page_token == '0') {
                         hasRemoutePage = false
                     }
                 }
