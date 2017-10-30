@@ -8,9 +8,9 @@ class Config {
     public final static KEY = "AIzaSyBpLk-GrkZy8N599XaP9RTsBl-kGNr2Fpg"
     public final static LANGUAGE = "en"
     public final static MAX_FAIL = 3
-    public final static PAUSE = 2000
-    public final static MAX_PAGES_GOOGLE_API = 3
-    public final static NOT_TYPE_MESSAGE = "There is not such type for filter"
+    public final static PAUSE = 2500
+    public final static MAX_PAGES_GOOGLE_API = 1
+    public final static NOT_TYPE_FIELD_MESSAGE = "There is not such type for filter"
     public final static NOT_SORT_FIELD_MESSAGE = "There is not such field for sorting"
     public final static ERROR_SERVER_MESSAGE = "Error Server"
     public final static TRY_AGAIN_MESSAGE="trying get data again"

@@ -7,7 +7,7 @@ import ua.place.exception.NotReceivedException
 
 class Parser {
     //Получить все страницы
-    def userData
+    def incomeData
 
     def parsePages(listPages) throws NotReceivedException {
         List list = []
@@ -15,7 +15,7 @@ class Parser {
             if (it.status != StatusCodeEnum.OK as String) throw new NotReceivedException(it.status)
             it.results.each { list << parsePlace(it) }
         }
-        list
+        return list
     }
 
     //Парсим JSON
@@ -37,13 +37,13 @@ class Parser {
         place.placeId = itPlace.place_id
         place.name = itPlace.name
         place.vicinity = itPlace.vicinity
-        place.distance = distance(userData.incomeData.location.latitude,
-                                  userData.incomeData.location.longitude,
+        place.distance = distance(incomeData.location.latitude,
+                                  incomeData.location.longitude,
                                   location.latitude,
                                   location.longitude
                                   )
 
         place.types = itPlace.types
-        place
+        return place
     }
 }

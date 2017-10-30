@@ -9,17 +9,18 @@ class HandlerRecipient {
 
     //сортировка по полю
     def sortedByField(sortedBy, listForSorted) {
+        def list=listForSorted.collect()
         if (sortedBy == null) {
-            return listForSorted
+            return list
         }
 
         try {
-            if (Place.getMetaPropertyValues().hasProperty(userData.incomeData.sortedByField) == null) {
-                throw new NotFieldException(Config.NOT_SORT_FIELD_MESSAGE)
+            if (!(sortedBy in Place.declaredFields*.name)) {
+                throw new NotFieldException(Config.NOT_SORT_FIELD_MESSAGE+":"+sortedBy)
             }
         } catch (NotFieldException e) {
-            userData.log.listMessage << e.message
-            return
+           println e.message
+           return list
         }
 
         //Компаратор для сравнения полей
@@ -37,19 +38,24 @@ class HandlerRecipient {
                 return aValue.compareTo(bValue)
         }
 
-        if (userData.listPlace.size() != 0) {
-            userData.listPlace.sort(comparator.curry(userData.incomeData.sortedByField))
+        if (list != 0) {
+            list.sort(comparator.curry(sortedBy))
         }
     }
 
     //Фильтрация по типу
     def filterByType(filter, listForFilter) throws NotTypeException {
         if (filter == null) {
-            return listForFilter
+            return listForFilter.collect()
         }
 
-        if (!(filter in Config.types)) {
-            throw new NotTypeException(Config.NOT_TYPE_MESSAGE)
+        try {
+            if (!(filter in Config.types)) {
+                throw new NotTypeException(Config.NOT_TYPE_FIELD_MESSAGE+":"+filter)
+            }
+        }catch (NotTypeException e){
+            println e.message
+            return listForFilter.collect()
         }
 
         List list = []

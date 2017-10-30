@@ -6,24 +6,28 @@ import ua.place.service.HandlerRecipient
 import ua.place.service.Parser
 import ua.place.service.PrinterData
 
-def limitPages = 3
+def limitPages = 1
 def filterBy = null
 def sortedBy = null
 
-incomeData = new InсomeData(location: new Location(latitude: 48.5123967, longitude: 35.0844862),
+def incomeData = new InсomeData(location: new Location(latitude: 48.5123967, longitude: 35.0844862),
         limitPages: limitPages,
         filterBy: filterBy,
         sortedBy: sortedBy)
 
-googlePlaceRecipient=new GooglePlaceRecipient()
-parser=new Parser()
-handlerRecipient=new HandlerRecipient()
-printData = new PrinterData()
-listJsonPages = googlePlaceRecipient.requestPages(incomeData)
-userData = new UserData(listJsonPages)
-listPlaceParsered=parser.parsePages(userData.listJsonPages)
-listPlaceFiltered=handlerRecipient.filterByType(incomeData.filterBy,listPlaceParsered)
-listPlaceSorted=handlerRecipient.sortedByField(incomeData.sortedBy,listPlaceFiltered)
-printData.printOne(listPlaceSorted[0])
-printData.printAll(listPlaceSorted)
+def googlePlaceRecipient=new GooglePlaceRecipient()
+def parser=new Parser(incomeData: incomeData)
+def handlerRecipient=new HandlerRecipient()
+def printData = new PrinterData()
+
+def listJsonPages = googlePlaceRecipient.requestPages(incomeData)
+def userData = new UserData(listJsonPages)
+
+def parsedList=parser.parsePages(userData.listJsonPages)
+def filteredList=handlerRecipient.filterByType(incomeData.filterBy,parsedList)
+sortedList=handlerRecipient.sortedByField(incomeData.sortedBy,filteredList)
+
+printData.printOne(sortedList[0])
+println "*******************************"
+printData.printAll(sortedList)
 

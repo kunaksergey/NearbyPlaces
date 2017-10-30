@@ -5,7 +5,7 @@ class Place {
     def placeId
     def name
     def vicinity
-    def distance
+    BigDecimal distance
     def types=[]
     def location=new Location()
     def detail=new Detail()
