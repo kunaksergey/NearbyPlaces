@@ -56,7 +56,7 @@ class GooglePlace {
                 response.success = { resp, json ->
                     assert resp.status == 200
                     pages << json
-                    if (json.next_page_token == null||json.next_page_token == '0') {
+                    if (json.next_page_token == null || json.next_page_token == '0') {
                         hasRemoutePage = false
                     }
                 }
@@ -100,8 +100,8 @@ class GooglePlace {
                 else
                     return aValue.compareTo(bValue)
             }
-            if(result.size()!=0){
-            result.sort(comparator)
+            if (result.size() != 0) {
+                result.sort(comparator)
             }
         }
         this
@@ -141,7 +141,14 @@ class GooglePlace {
     def parsePlace(itPlace) {
         //Расчет дистанции
         def distance = { ltd, lgt ->
-            Math.sqrt(Math.pow((Math.abs(latitude as BigDecimal) - Math.abs(ltd as BigDecimal)), 2) + Math.pow((Math.abs(longitude as BigDecimal) - Math.abs(lgt as BigDecimal)), 2))
+            Math.sqrt(
+                    Math.pow(
+                            (latitude as BigDecimal) - (ltd as BigDecimal),
+                            2) +
+                            Math.pow(
+                                    (longitude as BigDecimal) - (lgt as BigDecimal),
+                                    2)
+            )
         }
         def lat = itPlace.geometry.location.lat
         def lng = itPlace.geometry.location.lng
