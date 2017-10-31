@@ -16,8 +16,7 @@ class PrinterData {
 
     def printOne(place){
         if(place==null){
-            println Config.NOT_DATA_MESSAGE
-            return
+             return
         }
          println place
     }

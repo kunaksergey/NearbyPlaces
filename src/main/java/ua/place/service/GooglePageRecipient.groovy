@@ -9,7 +9,7 @@ import ua.place.enumer.StatusCodeEnum
 import static groovyx.net.http.ContentType.JSON
 import static groovyx.net.http.Method.GET
 
-class GooglePlaceRecipient {
+class GooglePageRecipient {
     def http = new HTTPBuilder(Config.BASE_URL)
 
     def requestPages(InсomeData incomeData) {
@@ -54,13 +54,13 @@ class GooglePlaceRecipient {
                                 sleep(Config.PAUSE)
                                 i--
                                 countFail++
-                                //userData.log.listMessage<<Config.TRY_AGAIN_MESSAGE+":"+json.status
+                                println json.status
                             }
                         }
 
                         //bad data
                         if (json.status == StatusCodeEnum.INVALID_REQUEST as String || json.status == StatusCodeEnum.REQUEST_DENIED as String) {
-                            //userData.log.listMessage<<Config.ERROR_SERVER_MESSAGE+":"+json.status
+                            println json.status
                             countFail = Config.MAX_FAIL
                         }
 
@@ -82,8 +82,8 @@ class GooglePlaceRecipient {
 
                 lastRequestTimestamp = System.currentTimeMillis()
             }
-        } catch (HttpResponseException e) {
-            println e.stackTrace
+        } catch (UnknownHostException e) {
+            println e.message
         } catch (ConnectException e) {
             println e.stackTrace
         } finally {
