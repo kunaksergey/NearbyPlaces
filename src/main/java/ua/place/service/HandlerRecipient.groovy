@@ -9,6 +9,8 @@ class HandlerRecipient {
 
     //сортировка по полю
     def sortedByField(sortedBy, listForSorted) {
+        assert listForSorted instanceof List
+
         def list=listForSorted.collect()
         if (sortedBy == null) {
             return list
@@ -45,6 +47,7 @@ class HandlerRecipient {
 
     //Фильтрация по типу
     def filterByType(filter, listForFilter) throws NotTypeException {
+        assert listForFilter instanceof List
         if (filter == null) {
             return listForFilter.collect()
         }

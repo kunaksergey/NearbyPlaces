@@ -12,8 +12,8 @@ import static groovyx.net.http.Method.GET
 class GooglePageRecipient {
     def http = new HTTPBuilder(Config.BASE_URL)
 
-    def requestPages(InсomeData incomeData) {
-
+    def requestPages(incomeData) {
+        assert incomeData instanceof InсomeData
         def countFail = 0
         def pages = []
         def hasRemoutePage = true

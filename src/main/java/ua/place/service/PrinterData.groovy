@@ -1,8 +1,5 @@
 package ua.place.service
 
-import ua.place.config.Config
-import ua.place.entity.UserData
-
 class PrinterData {
 
     def printAll(list){
