@@ -32,7 +32,7 @@ class GooglePageRecipient {
                 }
 
 
-                http.request(GET, JSON) {req->
+                http.request(GET, JSON) { req ->
                     uri.path = Config.NEAR_BY_SEARCH_URI //uri near places
 
                     def keyMap = [key     : Config.KEY,
@@ -60,8 +60,8 @@ class GooglePageRecipient {
 
                         //bad data
                         if (json.status == StatusCodeEnum.INVALID_REQUEST as String || json.status == StatusCodeEnum.REQUEST_DENIED as String) {
-                            println json.status
                             countFail = Config.MAX_FAIL
+                            println json.status
                         }
 
                         //data OK
