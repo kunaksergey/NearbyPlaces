@@ -1,12 +1,9 @@
 package ua.place.http
 
 import groovyx.net.http.HTTPBuilder
-import groovyx.net.http.HttpResponseException
 import ua.place.config.Config
 import ua.place.entity.Detail
-import ua.place.entity.DumpData
-import ua.place.entity.InсomeData
-import ua.place.entity.Place
+import ua.place.entity.IncomeData
 import ua.place.enumer.StatusCodeEnum
 import ua.place.exception.GoogleException
 
@@ -18,7 +15,7 @@ class GooglePagesClient {
 
     def requestPages(incomeData) throws GoogleException {
 
-        assert incomeData instanceof InсomeData
+        assert incomeData instanceof IncomeData
         def countFail = 0
         def pages = []
         def hasRemoutePage = true
@@ -87,7 +84,8 @@ class GooglePagesClient {
                 lastRequestTimestamp = System.currentTimeMillis()
             }
             pages
-        } catch (UnknownHostException ex) {
+        }
+        catch (UnknownHostException ex) {
             throw new GoogleException(ex.message)
         } catch (ConnectException e) {
             throw new GoogleException(e.message)

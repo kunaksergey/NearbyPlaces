@@ -1,28 +1,47 @@
-import ua.place.Runner
-import ua.place.entity.InсomeData
-import ua.place.entity.Location
-import ua.place.entity.UserAnswer
+import org.codehaus.groovy.runtime.InvokerHelper
+import ua.place.parser.IncomeDataParser
+import ua.place.runner.CommandLineRunner
+import ua.place.service.PrinterData
 
-//def latitude = 48.5123967
-//def longitude = 35.0844862
-//def limitPages =1
-//def filterBy = null
-//def sortedBy = null
+answers=dialog()
 
-static main(args) {
-def latitude = 48.5123967
-def longitude = 35.0844862
-def limitPages =1
-def filterBy = ['store','ss']
-def sortedBy = null
-    def incomeData = new InсomeData(
-            location: new Location(latitude: latitude, longitude: longitude),
-            limitPages: limitPages, filterBy: filterBy,sortedBy: sortedBy)
+    try{
+    def incomeData=new IncomeDataParser().parseArgs(answers)
+    def userAnswer=new CommandLineRunner().run(incomeData)
+    def printData = new PrinterData()
+    printData.printOne(userAnswer.places[0])
+    println "******************************"
+    printData.printAll(userAnswer.places)
+    }catch (NumberFormatException ex){
+        //как-то обработать
+    }
 
-    def userAnswer=new Runner().run(incomeData)
+def dialog(){
+    System.in.withReader {
+        def answers=[]
+        print "Latitude : max/min +90 to -90:"
+        answers<< it.readLine()
+        print "Longitude : max/min +180 to -180:"
+        answers<< it.readLine()
+        print "pages limit(1-3):"
+        answers<< it.readLine()
+        print "filters (f1 f2 ...): "
+        answers<< it.readLine()
+        print "sort:"
+        answers<< it.readLine()
+    }
 
 }
 
+def shotDialog(){
+    def answers=[]
+    System.in.withReader {
+        print "filters (f1 f2 ...): "
+        answers << it.readLine()
+        print "sort:"
+        answers << it.readLine()
+    }
+}
 //
 //
 //def log=[]

@@ -5,7 +5,7 @@ import ua.place.entity.Place
 import ua.place.enumer.StatusCodeEnum
 import ua.place.exception.NotReceivedException
 
-class Parser {
+class JsonPlaceParser {
 
     def parsePages(inLocation, listPages) {
         assert listPages instanceof List
