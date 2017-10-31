@@ -8,9 +8,9 @@ import ua.place.service.PrinterData
 
 def latitude = 48.5123967
 def longitude = 35.0844862
-def limitPages = 2
-def filterBy = null
-def sortedBy = null
+def limitPages = 1
+def filterBy = "store"
+def sortedBy = "distance"
 
 def incomeData = new InсomeData(
         location: new Location(latitude: latitude, longitude: longitude),

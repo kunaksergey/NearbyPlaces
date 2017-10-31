@@ -13,6 +13,7 @@ class HandlerRecipient {
 
         def list = listForSorted.collect()
         try {
+
             if (sortedBy == null || !(sortedBy in Place.declaredFields*.name)) {
                 throw new NotFieldException(Config.NOT_SORT_FIELD_MESSAGE)
             }
@@ -36,11 +37,10 @@ class HandlerRecipient {
                 list.sort(comparator.curry(sortedBy))
             }
 
-
         } catch (NotFieldException e) {
             println e.message
 
-        }finally{
+        } finally {
             return list
         }
     }
