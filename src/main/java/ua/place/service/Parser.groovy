@@ -6,24 +6,24 @@ import ua.place.enumer.StatusCodeEnum
 import ua.place.exception.NotReceivedException
 
 class Parser {
-    //Получить все страницы
+    //входные данные
     def incomeData
 
     def parsePages(listPages) {
         List list = []
         listPages.each {
-            try{
+            //try{
             if (it.status != StatusCodeEnum.OK as String) throw new NotReceivedException(it.status)
             it.results.each { list << parsePlace(it) }
-            }catch (NotReceivedException e){
-                println StatusCodeEnum.OK
-                return list
-            }
+//            }catch (NotReceivedException e){
+//                println StatusCodeEnum.OK
+//                return list
+//            }
         }
         return list
     }
 
-    //Парсим JSON
+    //Парсим JSON объект
     private def parsePlace(itPlace) {
 
         //Расчет дистанции

@@ -4,7 +4,7 @@ class PrinterData {
 
     def printAll(list){
         if(list.size()==0 ){
-            return
+            println "[]"
         }
         list.each{
         println it

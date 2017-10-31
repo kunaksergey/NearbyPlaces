@@ -5,6 +5,7 @@ import groovyx.net.http.HttpResponseException
 import ua.place.config.Config
 import ua.place.entity.InсomeData
 import ua.place.enumer.StatusCodeEnum
+import ua.place.exception.GoogleException
 
 import static groovyx.net.http.ContentType.JSON
 import static groovyx.net.http.Method.GET
@@ -12,7 +13,7 @@ import static groovyx.net.http.Method.GET
 class GooglePageRecipient {
     def http = new HTTPBuilder(Config.BASE_URL)
 
-    def requestPages(incomeData) {
+    def requestPages(incomeData) throws GoogleException {
         assert incomeData instanceof InсomeData
         def countFail = 0
         def pages = []
@@ -54,14 +55,16 @@ class GooglePageRecipient {
                                 sleep(Config.PAUSE)
                                 i--
                                 countFail++
-                                println json.status
+
                             }
+                            throw new GoogleException(json.status)
                         }
 
                         //bad data
                         if (json.status == StatusCodeEnum.INVALID_REQUEST as String || json.status == StatusCodeEnum.REQUEST_DENIED as String) {
                             countFail = Config.MAX_FAIL
-                            println json.status
+                            throw new GoogleException(json.status)
+                            //println json.status
                         }
 
                         //data OK
@@ -81,13 +84,13 @@ class GooglePageRecipient {
                 }
 
                 lastRequestTimestamp = System.currentTimeMillis()
+
             }
-        } catch (UnknownHostException e) {
-            println e.message
-        } catch (ConnectException e) {
-            println e.stackTrace
-        } finally {
             return pages
+        } catch (UnknownHostException ex) {
+            throw new GoogleException(ex.message)
+        } catch (ConnectException e) {
+            throw new GoogleException(e.message)
         }
     }
 

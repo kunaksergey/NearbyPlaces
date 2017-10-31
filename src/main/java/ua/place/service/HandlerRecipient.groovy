@@ -2,6 +2,7 @@ package ua.place.service
 
 import ua.place.config.Config
 import ua.place.entity.Place
+import ua.place.enumer.StatusCodeEnum
 import ua.place.exception.NotFieldException
 import ua.place.exception.NotTypeException
 
@@ -12,10 +13,8 @@ class HandlerRecipient {
         assert listForSorted instanceof List
 
 
-    //    try {
-
             if (sortedBy == null || !(sortedBy in Place.declaredFields*.name)) {
-                throw new NotFieldException(Config.NOT_SORT_FIELD_MESSAGE)
+                throw new NotFieldException(StatusCodeEnum.NOT_MATCHING)
             }
 
             //Компаратор для сравнения полей
@@ -52,7 +51,7 @@ class HandlerRecipient {
         def list = []
         //try {
             if (filter == null || !(filter in Config.types)) {
-                throw new NotTypeException(Config.NOT_TYPE_FIELD_MESSAGE)
+                throw new NotTypeException(StatusCodeEnum.NOT_MATCHING)
             }
 
             listForFilter.each {
