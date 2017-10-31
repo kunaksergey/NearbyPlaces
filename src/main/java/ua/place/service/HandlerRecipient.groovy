@@ -9,11 +9,11 @@ import ua.place.exception.NotTypeException
 class HandlerRecipient {
 
     //сортировка по полю
-    def sortedByField(sortedBy, listForSorted) throws NotFieldException {
+    def sortedByField(sortedBy, listForSorted, classForSort) throws NotFieldException {
         assert listForSorted instanceof List
+        assert classForSort instanceof Class
 
-
-        if (sortedBy == null || !(sortedBy in Place.declaredFields*.name)) {
+        if (sortedBy == null || !(sortedBy in classForSort.declaredFields*.name)) {
             throw new NotFieldException(StatusCodeEnum.NOT_MATCHING as String)
         }
 
