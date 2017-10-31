@@ -1,6 +1,7 @@
 import ua.place.entity.InсomeData
 import ua.place.entity.Location
-
+import ua.place.exception.NotFieldException
+import ua.place.exception.NotTypeException
 import ua.place.service.GooglePageRecipient
 import ua.place.service.HandlerRecipient
 import ua.place.service.Parser
@@ -17,14 +18,29 @@ def incomeData = new InсomeData(
         limitPages: limitPages,
         filterBy: filterBy,
         sortedBy: sortedBy)
-
+log = []
 def pageRecipient = new GooglePageRecipient()
 def googlePages = pageRecipient.requestPages(incomeData)
 def listPlace = new Parser(incomeData: incomeData).parsePages(googlePages)
 
 def handlerRecipient = new HandlerRecipient()
-def listFilteredPlace = handlerRecipient.filterByType(incomeData.filterBy, listPlace)
-def listSortedPlace = handlerRecipient.sortedByField(incomeData.sortedBy, listFilteredPlace)
+//def listFilteredPlace = handlerRecipient.filterByType(incomeData.filterBy, listPlace)
+def listFilteredPlace
+try {
+    listFilteredPlace = handlerRecipient.filterByType(incomeData.filterBy, listPlace)
+    log << "filtered:OK"
+} catch (NotTypeException e) {
+    listFilteredPlace = listPlace.collect()
+    log << e.message
+}
+def listSortedPlace
+try {
+    listSortedPlace = handlerRecipient.sortedByField(incomeData.sortedBy, listFilteredPlace)
+    log << "sorted:OK"
+} catch (NotFieldException e) {
+    listSortedPlace = listPlace.collect()
+    log << e.message
+}
 
 def printData = new PrinterData()
 printData.printOne(listSortedPlace[0])

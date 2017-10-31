@@ -8,11 +8,11 @@ import ua.place.exception.NotTypeException
 class HandlerRecipient {
 
     //сортировка по полю
-    def sortedByField(sortedBy, listForSorted) {
+    def sortedByField(sortedBy, listForSorted) throws NotFieldException {
         assert listForSorted instanceof List
 
-        def list = listForSorted.collect()
-        try {
+
+    //    try {
 
             if (sortedBy == null || !(sortedBy in Place.declaredFields*.name)) {
                 throw new NotFieldException(Config.NOT_SORT_FIELD_MESSAGE)
@@ -33,23 +33,24 @@ class HandlerRecipient {
                     return aValue.compareTo(bValue)
             }
 
+          def list = listForSorted.collect()
             if (list != 0) {
                 list.sort(comparator.curry(sortedBy))
             }
-
-        } catch (NotFieldException e) {
-            println e.message
-
-        } finally {
-            return list
-        }
+             return list
+//        } catch (NotFieldException e) {
+//            println e.message
+//
+//        } finally {
+//            return list
+//        }
     }
 
     //Фильтрация по типу
-    def filterByType(filter, listForFilter) {
+    def filterByType(filter, listForFilter)throws NotTypeException {
         assert listForFilter instanceof List
         def list = []
-        try {
+        //try {
             if (filter == null || !(filter in Config.types)) {
                 throw new NotTypeException(Config.NOT_TYPE_FIELD_MESSAGE)
             }
@@ -60,10 +61,10 @@ class HandlerRecipient {
                 }
             }
             return list
-        } catch (NotTypeException e) {
-            println e.message
-            return listForFilter.collect()
-        }
+//        } catch (NotTypeException e) {
+//            println e.message
+//            return listForFilter.collect()
+//        }
 
     }
 }
