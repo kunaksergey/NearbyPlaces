@@ -6,5 +6,5 @@ class InсomeData {
     Location location
     Integer limitPages=Config.DEFAULT_LIMIT_PAGES
     String sortedBy
-    String filterBy
+    List filterBy
 }

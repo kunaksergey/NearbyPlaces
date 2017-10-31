@@ -7,8 +7,8 @@ class Place {
     def vicinity
     BigDecimal distance
     def types=[]
-    def location=new Location()
-    def detail=new Detail()
+    def location
+    def detail
 
     @Override
      String toString() {
@@ -17,6 +17,10 @@ class Place {
                 ", distance=" + distance +
                 ", types=" + types +
                 ", detail=" + detail
+
+    }
+
+    def filter(types) {
 
     }
 

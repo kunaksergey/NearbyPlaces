@@ -1,9 +1,10 @@
-package ua.place.service
+package ua.place.http
 
 import groovyx.net.http.HTTPBuilder
 import groovyx.net.http.HttpResponseException
 import ua.place.config.Config
 import ua.place.entity.Detail
+import ua.place.entity.DumpData
 import ua.place.entity.InсomeData
 import ua.place.entity.Place
 import ua.place.enumer.StatusCodeEnum
@@ -12,10 +13,11 @@ import ua.place.exception.GoogleException
 import static groovyx.net.http.ContentType.JSON
 import static groovyx.net.http.Method.GET
 
-class GooglePageRecipient {
+class GooglePagesClient {
     def http = new HTTPBuilder(Config.BASE_URL)
 
     def requestPages(incomeData) throws GoogleException {
+
         assert incomeData instanceof InсomeData
         def countFail = 0
         def pages = []
@@ -26,7 +28,7 @@ class GooglePageRecipient {
             for (int i = 0; i < limitPage(incomeData.limitPages); i++) {
 
                 if (!hasRemoutePage || countFail == Config.MAX_FAIL) {
-                    return
+                    return pages
                 }
 
                 def p = Config.PAUSE - (System.currentTimeMillis() - lastRequestTimestamp)
@@ -70,7 +72,7 @@ class GooglePageRecipient {
 
                         //data OK
                         if (json.status == StatusCodeEnum.OK as String) {
-                            pages << json
+                            pages.addAll(json.results)
                             countFail = 0
                         }
 
@@ -84,7 +86,7 @@ class GooglePageRecipient {
                 }
                 lastRequestTimestamp = System.currentTimeMillis()
             }
-            return pages
+            pages
         } catch (UnknownHostException ex) {
             throw new GoogleException(ex.message)
         } catch (ConnectException e) {
@@ -97,24 +99,37 @@ class GooglePageRecipient {
     }
 
 //Получаем дополнительные данные объекта
-    def requestDetailsPage(placeId) {
-        def detail=new Detail()
-        http.request(GET, JSON) {
-            uri.path = Config.DETAILS_URI //uri place detail
-            uri.query = [placeid : placeId,
-                         key     : Config.KEY,
-                         language: Config.LANGUAGE]
+    def requestDetailsPage(placeId) throws GoogleException {
+        def detail = new Detail()
+        try {
+            http.request(GET, JSON) {
+                uri.path = Config.DETAILS_URI //uri place detail
+                uri.query = [placeid : placeId,
+                             key     : Config.KEY,
+                             language: Config.LANGUAGE]
 
-            response.success = { resp, json ->
-                assert resp.status == 200
-                detail.rating = json.result.rating
-                detail.icon = json.result.icon
-            }
+                response.success = { resp, json ->
+                    assert resp.status == 200
+                    if (json.status in [StatusCodeEnum.INVALID_REQUEST,
+                                        StatusCodeEnum.OVER_QUERY_LIMIT,
+                                        StatusCodeEnum.INVALID_REQUEST,
+                                        StatusCodeEnum.REQUEST_DENIED]) {
+                        throw new GoogleException(json.status)
+                    }
+                    detail.rating = json.result.rating
+                    detail.icon = json.result.icon
+                }
 
-            response.'404' = { resp ->
-                println 'Not found'
+                response.'404' = { resp ->
+                    println 'Not found'
+                }
             }
+            return detail
         }
-        return detail
+        catch (UnknownHostException ex) {
+            throw new GoogleException(ex.message)
+        } catch (ConnectException e) {
+            throw new GoogleException(e.message)
+        }
     }
 }
