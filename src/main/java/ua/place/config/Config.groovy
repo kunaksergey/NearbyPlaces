@@ -10,11 +10,6 @@ class Config {
     public final static MAX_FAIL = 3
     public final static PAUSE = 2500
     public final static MAX_PAGES_GOOGLE_API = 1
-    public final static NOT_TYPE_FIELD_MESSAGE = "There is not such type for filter"
-    public final static NOT_SORT_FIELD_MESSAGE = "There is not such field for sorting"
-    public final static ERROR_SERVER_MESSAGE = "Error Server"
-    public final static TRY_AGAIN_MESSAGE="trying get data again"
-    public final static NOT_DATA_MESSAGE="there is not data"
     public final static def types=['accounting','airport','amusement_park','amusement_park','aquarium','art_gallery','atm','bakery','bank','bar',
             'beauty_salon','bicycle_store','book_store','bowling_alley','bus_station','cafe','campground','car_dealer','car_rental',
             'car_repair','car_wash','casino','cemetery','church','city_hall','clothing_store','convenience_store','courthouse',

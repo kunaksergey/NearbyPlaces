@@ -3,7 +3,9 @@ package ua.place.service
 import groovyx.net.http.HTTPBuilder
 import groovyx.net.http.HttpResponseException
 import ua.place.config.Config
+import ua.place.entity.Detail
 import ua.place.entity.InсomeData
+import ua.place.entity.Place
 import ua.place.enumer.StatusCodeEnum
 import ua.place.exception.GoogleException
 
@@ -31,7 +33,6 @@ class GooglePageRecipient {
                 if (p > 0) {
                     sleep(p as long)//засыпаем если между запросами меньше PAUSE
                 }
-
 
                 http.request(GET, JSON) { req ->
                     uri.path = Config.NEAR_BY_SEARCH_URI //uri near places
@@ -77,14 +78,11 @@ class GooglePageRecipient {
                             hasRemoutePage = false
                         }
                     }
-
                     response.'404' = { resp ->
                         println 'Not found'
                     }
                 }
-
                 lastRequestTimestamp = System.currentTimeMillis()
-
             }
             return pages
         } catch (UnknownHostException ex) {
@@ -99,22 +97,24 @@ class GooglePageRecipient {
     }
 
 //Получаем дополнительные данные объекта
-    def requestDetailsPage() {
+    def requestDetailsPage(placeId) {
+        def detail=new Detail()
         http.request(GET, JSON) {
             uri.path = Config.DETAILS_URI //uri place detail
-            uri.query = [placeid : userData.place.placeId,
+            uri.query = [placeid : placeId,
                          key     : Config.KEY,
                          language: Config.LANGUAGE]
 
             response.success = { resp, json ->
                 assert resp.status == 200
-                place.detail.rating = json.result.rating
-                place.detail.icon = json.result.icon
+                detail.rating = json.result.rating
+                detail.icon = json.result.icon
             }
 
             response.'404' = { resp ->
                 println 'Not found'
             }
         }
+        return detail
     }
 }

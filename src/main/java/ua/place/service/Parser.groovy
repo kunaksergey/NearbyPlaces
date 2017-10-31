@@ -12,13 +12,8 @@ class Parser {
     def parsePages(listPages) {
         List list = []
         listPages.each {
-            //try{
             if (it.status != StatusCodeEnum.OK as String) throw new NotReceivedException(it.status)
             it.results.each { list << parsePlace(it) }
-//            }catch (NotReceivedException e){
-//                println StatusCodeEnum.OK
-//                return list
-//            }
         }
         return list
     }

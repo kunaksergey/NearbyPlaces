@@ -1,6 +1,6 @@
 package ua.place.entity
 
-class userAnswer {
+class UserAnswer {
     def log
     def result
 }
