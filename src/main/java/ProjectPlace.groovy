@@ -13,7 +13,7 @@ static main(args) {
 def latitude = 48.5123967
 def longitude = 35.0844862
 def limitPages =1
-def filterBy = ['store','sss']
+def filterBy = ['store','ss']
 def sortedBy = null
     def incomeData = new InсomeData(
             location: new Location(latitude: latitude, longitude: longitude),
