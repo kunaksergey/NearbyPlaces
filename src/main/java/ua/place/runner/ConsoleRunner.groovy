@@ -9,14 +9,22 @@ class ConsoleRunner {
     def run() {
         def console = new ConsoleDialog()
         def printerData = new PrintData()
-        def replay = true
-        while (replay) {
+        def replayQuary = true
+        while (replayQuary) {
             def procces = new DataManingProcess()
             def incomeDate = console.getIncomeData()
             def outcomeData = procces.getOutcomeData(incomeDate)
             printerData.printIncomeData(incomeDate)
             printerData.printOutcomeData(outcomeData)
-            replay = console.reply()
+            def replayFormat=console.reply("Format replay?")
+            while(replayFormat){
+                def inData = console.getIncomeData(incomeDate)
+                def outData=procces.getOutcomeData(inData)
+                printerData.printIncomeData(inData)
+                printerData.printOutcomeData(outData)
+                replayFormat=console.reply("Format replay?")
+            }
+            replayQuary = console.reply("Google quary replay?")
         }
     }
 }

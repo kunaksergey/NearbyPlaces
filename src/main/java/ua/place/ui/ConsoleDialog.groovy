@@ -1,15 +1,27 @@
 package ua.place.ui
 
+import ua.place.entity.data.IncomeData
 import ua.place.parser.AnswerIncomeDataParser
 
 class ConsoleDialog {
     def answerParser = new AnswerIncomeDataParser()
 
-    def getIncomeData(){
+    def getIncomeData() {
         def answersMap = dialog()
         answerParser.parseAnswers(answersMap)
     }
-    def dialog() {
+
+    def getIncomeData(incomeData) {
+        assert incomeData instanceof IncomeData
+        def answersMap = [:]
+        answersMap['latitude'] = incomeData.location.latitude
+        answersMap['longitude'] = incomeData.location.longitude
+        answersMap['limit'] =incomeData.limitPages
+        answersMap << shotDialog()
+        answerParser.parseAnswers(answersMap)
+    }
+
+    private def dialog() {
         def answersMap = [:]
         def scanner = new Scanner(System.in)
         print "Latitude (max/min +90 to -90):"
@@ -22,7 +34,7 @@ class ConsoleDialog {
         return answersMap
     }
 
-    def shotDialog() {
+    private def shotDialog() {
         def answersMap = [:]
         def scanner = new Scanner(System.in)
         print "filters (f1 f2 ...): "
@@ -32,13 +44,8 @@ class ConsoleDialog {
         return answersMap
     }
 
-    def reply() {
-        println 'Continue?(Y/N)'
-        def scanner = new Scanner(System.in)
-        return (scanner.nextLine().toLowerCase() == 'y')
-    }
-    def replyRequest() {
-        println 'Replay quary to Google?(Y/N)'
+    def reply(def message) {
+        println "$message (Y/N)"
         def scanner = new Scanner(System.in)
         return (scanner.nextLine().toLowerCase() == 'y')
     }
