@@ -1,4 +1,4 @@
-import ua.place.runner.ApplicationRunner
+import ua.place.client.runner.ApplicationRunner
 
 new ApplicationRunner().run()
 

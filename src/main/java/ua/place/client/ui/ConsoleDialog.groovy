@@ -1,4 +1,4 @@
-package ua.place.ui
+package ua.place.client.ui
 
 class ConsoleDialog {
 
@@ -9,8 +9,8 @@ class ConsoleDialog {
         answersMap['latitude'] = scanner.nextLine()
         print "Longitude (max/min +180 to -180):"
         answersMap['longitude'] = scanner.nextLine()
-        print "Limit(1-3): "
-        answersMap['limit'] = scanner.nextLine()
+        print "Radius: "
+        answersMap['radius'] = scanner.nextLine()
         answersMap << shotDialog()
         return answersMap
     }

@@ -1,4 +1,4 @@
-package ua.place.tools
+package ua.place.client.tools
 
 import ua.place.entity.data.IncomeData
 import ua.place.entity.data.OutcomeData

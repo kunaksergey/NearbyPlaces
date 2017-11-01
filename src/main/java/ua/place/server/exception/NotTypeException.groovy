@@ -1,4 +1,4 @@
-package ua.place.exception
+package ua.place.server.exception
 
 class NotTypeException extends Exception{
     NotTypeException(String message) {

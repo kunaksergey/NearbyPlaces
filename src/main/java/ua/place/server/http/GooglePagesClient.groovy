@@ -1,12 +1,12 @@
-package ua.place.http
+package ua.place.server.http
 
 import groovyx.net.http.HTTPBuilder
 import org.apache.log4j.Logger
-import ua.place.config.Config
-import ua.place.entity.place.DetailPlace
+import ua.place.server.config.Config
 import ua.place.entity.data.IncomeData
-import ua.place.enumer.StatusCodeEnum
-import ua.place.exception.GoogleException
+import ua.place.entity.place.DetailPlace
+import ua.place.server.enumer.StatusCodeEnum
+import ua.place.server.exception.GoogleException
 
 import static groovyx.net.http.ContentType.JSON
 import static groovyx.net.http.Method.GET
@@ -15,86 +15,79 @@ class GooglePagesClient {
     final static Logger logger = Logger.getLogger(GooglePagesClient.class)
     def http = new HTTPBuilder(Config.BASE_URL)
 
-    def requestPages(incomeData) {
-
+    def requestOnePage(incomeData) throws GoogleException {
         assert incomeData instanceof IncomeData
-        def countFail = 0
-        def pages = []
-        def hasRemoutePage = true
-        def lastRequestTimestamp = System.currentTimeMillis()
+        return quaryGoogle(incomeData, null)
+    }
 
-        try {
-            for (int i = 0; i < limitPage(incomeData.limitPages); i++) {
+    def requestAllPages(incomeData) throws GoogleException {
+        assert incomeData instanceof IncomeData
+        def googlePages = []
+        def next_page_token = incomeData.next_page_token //токен от клиента
+        while (next_page_token != null) {
+            def page = quaryGoogle(incomeData, next_page_token)
+            googlePages << page
+            next_page_token = page.next_page_token //токен от сервера
+        }
+        return googlePages
 
-                if (!hasRemoutePage || countFail == Config.MAX_FAIL) {
-                    return pages
-                }
+    }
 
-                def p = Config.PAUSE - (System.currentTimeMillis() - lastRequestTimestamp)
-                if (p > 0) {
-                    sleep(p as long)//засыпаем если между запросами меньше PAUSE
-                }
-
+    def quaryGoogle(incomeData, next_page_token) throws GoogleException {
+        def countFail = Config.MAX_FAIL //количество попыток чтения данных
+        while (countFail != 0) {
+            def googlePage = []
+            try {
                 http.request(GET, JSON) { req ->
                     uri.path = Config.NEAR_BY_SEARCH_URI //uri near places
 
                     def keyMap = [key     : Config.KEY,
                                   location: incomeData.location.latitude + ',' + incomeData.location.longitude,
-                                  rankby  : 'distance',
+                                  radius  : incomeData.radius,
                                   language: Config.LANGUAGE]
-                    if (pages.size() > 0 && pages[pages.size() - 1].next_page_token != null) {
-                        keyMap << [pagetoken: pages[pages.size() - 1].next_page_token as String]
+                    if (next_page_token != null) {
+                        keyMap += [next_page_token]
                     }
 
+                    //сохраняем url ключи для запроса
                     uri.query = keyMap
 
                     response.success = { resp, json ->
                         assert resp.status == 200
 
+                        //data OK
+                        if (json.status == StatusCodeEnum.OK as String) {
+                            countFail = 0 //если данные прочитаны успешно, то на выход
+                        }
+
                         //try again get data
                         if (json.status == StatusCodeEnum.UNKNOWN_ERROR as String || json.status == StatusCodeEnum.OVER_QUERY_LIMIT as String) {
                             if (countFail != Config.MAX_FAIL) {
                                 sleep(Config.PAUSE)
-                                i--
-                                countFail++
+                                //если флаги: UNKNOWN_ERROR или OVER_QUERY_LIMIT-пытаемся прочитать данные
+                                countFail--
                             }
-                            throw new GoogleException(json.status)
                         }
 
                         //bad data
                         if (json.status == StatusCodeEnum.INVALID_REQUEST as String || json.status == StatusCodeEnum.REQUEST_DENIED as String) {
-                            countFail = Config.MAX_FAIL
-                            throw new GoogleException(json.status)
+                            countFail = 0 //если флаги: INVALID_REQUEST или REQUEST_DENIED-разу на выход
                         }
 
-                        //data OK
-                        if (json.status == StatusCodeEnum.OK as String) {
-                            pages.addAll(json.results)
-                            countFail = 0
-                        }
-
-                        if (json.next_page_token == null || json.next_page_token == '0') {
-                            hasRemoutePage = false
-                        }
+                        googlePage << json
                     }
                     response.'404' = { resp ->
-                        println 'Not found'
+                        //do nothing
                     }
                 }
-                lastRequestTimestamp = System.currentTimeMillis()
+            } catch (UnknownHostException ex) {
+                logger.error('Unknown host')
+                throw new GoogleException(ex.message)
+            } catch (ConnectException ex) {
+                logger.error('Bad connect')
+                throw new GoogleException(ex.message)
             }
-            pages
-        } catch (GoogleException ex) {
-            logger.error(ex.message)
-        } catch (UnknownHostException ex) {
-            logger.error('Unknown host')
-        } catch (ConnectException ex) {
-            logger.error('Bad connect')
         }
-    }
-
-    private def limitPage(limit) {
-        (limit < 1 || limit > 3) ? Config.MAX_PAGES : limit
     }
 
 //Получаем дополнительные данные объекта

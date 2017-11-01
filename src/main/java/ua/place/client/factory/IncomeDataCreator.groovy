@@ -1,6 +1,6 @@
-package ua.place.factory
+package ua.place.client.factory
 
-import ua.place.config.Config
+import ua.place.server.config.Config
 import ua.place.entity.data.IncomeData
 import ua.place.entity.place.Location
 

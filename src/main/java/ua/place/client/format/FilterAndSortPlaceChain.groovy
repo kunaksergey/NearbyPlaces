@@ -1,12 +1,11 @@
-package ua.place.format
+package ua.place.client.format
 
 import org.apache.log4j.Logger
-import org.apache.log4j.spi.LoggerFactory
-import ua.place.config.Config
+import ua.place.server.config.Config
 import ua.place.entity.place.Place
-import ua.place.enumer.StatusCodeEnum
-import ua.place.exception.NotFieldException
-import ua.place.exception.NotTypeException
+import ua.place.server.enumer.StatusCodeEnum
+import ua.place.server.exception.NotFieldException
+import ua.place.server.exception.NotTypeException
 
 class FilterAndSortPlaceChain {
     final static Logger logger = Logger.getLogger(FilterAndSortPlaceChain.class)

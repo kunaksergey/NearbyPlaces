@@ -1,4 +1,4 @@
-package ua.place.exception
+package ua.place.server.exception
 
 import org.apache.http.client.ClientProtocolException
 

@@ -1,4 +1,4 @@
-package ua.place.parser
+package ua.place.server.parser
 
 import ua.place.entity.place.Location
 import ua.place.entity.place.Place
@@ -39,7 +39,9 @@ class JsonPlaceParser {
 
         List list = []
         listPages.each {
-            list << parsePlace(it)
+            it.each {
+                list << parsePlace(it)
+            }
         }
         return list
     }
