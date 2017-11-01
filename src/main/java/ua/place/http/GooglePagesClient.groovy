@@ -1,6 +1,7 @@
 package ua.place.http
 
 import groovyx.net.http.HTTPBuilder
+import org.apache.log4j.Logger
 import ua.place.config.Config
 import ua.place.entity.place.DetailPlace
 import ua.place.entity.data.IncomeData
@@ -11,9 +12,10 @@ import static groovyx.net.http.ContentType.JSON
 import static groovyx.net.http.Method.GET
 
 class GooglePagesClient {
+    final static Logger logger = Logger.getLogger(GooglePagesClient.class)
     def http = new HTTPBuilder(Config.BASE_URL)
 
-    def requestPages(incomeData) throws GoogleException {
+    def requestPages(incomeData) {
 
         assert incomeData instanceof IncomeData
         def countFail = 0
@@ -82,11 +84,12 @@ class GooglePagesClient {
                 lastRequestTimestamp = System.currentTimeMillis()
             }
             pages
-        }
-        catch (UnknownHostException ex) {
-            throw new GoogleException(ex.message)
+        } catch (GoogleException ex) {
+            logger.error(ex.message)
+        } catch (UnknownHostException ex) {
+            logger.error('Unknown host')
         } catch (ConnectException ex) {
-            throw new GoogleException(ex.message)
+            logger.error('Bad connect')
         }
     }
 

@@ -4,12 +4,9 @@ class Config {
     public final static BASE_URL = 'https://maps.googleapis.com'
     public final static NEAR_BY_SEARCH_URI = '/maps/api/place/nearbysearch/json'
     public final static DETAILS_URI = '/maps/api/place/details/json'
-    public final static DEFAULT_LIMIT_PAGES = 3
     public final static DEFAULT_LATITUDE = 45
     public final static DEFAULT_LONGITUDE = 45
     public final static DEFAULT_PAGES = 1
-    public final static DEFAULT_SORT_BY=''
-    public final static DEFAULT_FILTER_BY=''
     public final static MAX_PAGES = 3
     public final static KEY = "AIzaSyBpLk-GrkZy8N599XaP9RTsBl-kGNr2Fpg"
     public final static LANGUAGE = "en"

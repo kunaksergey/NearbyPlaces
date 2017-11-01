@@ -1,27 +1,22 @@
 package ua.place.runner
-import ua.place.ui.ConsoleUI
-import ua.place.HandlerData
-import ua.place.parser.AnswerInDataParser
+
+import ua.place.ui.ConsoleDialog
+import ua.place.process.DataManingProcess
+import ua.place.parser.AnswerIncomeDataParser
 import ua.place.tools.PrintData
 
 class ConsoleRunner {
     def run() {
-        def consoleUI = new ConsoleUI()
-        def handler = new HandlerData()
+        def console = new ConsoleDialog()
         def printerData = new PrintData()
-        def answerParser = new AnswerInDataParser()
         def replay = true
-        def answers = consoleUI.dialog()
         while (replay) {
-            def incomeDate = answerParser.parseAnswers(answers)
-            def outcomeData = handler.handle(incomeDate)
+            def procces = new DataManingProcess()
+            def incomeDate = console.getIncomeData()
+            def outcomeData = procces.getOutcomeData(incomeDate)
             printerData.printIncomeData(incomeDate)
             printerData.printOutcomeData(outcomeData)
-            if(consoleUI.reply()){
-
-            }
-
-            replay = consoleUI.reply()
+            replay = console.reply()
         }
     }
 }

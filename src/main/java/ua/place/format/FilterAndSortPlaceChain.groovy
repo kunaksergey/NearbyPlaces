@@ -1,17 +1,20 @@
 package ua.place.format
 
+import org.apache.log4j.Logger
+import org.apache.log4j.spi.LoggerFactory
 import ua.place.config.Config
 import ua.place.entity.place.Place
 import ua.place.enumer.StatusCodeEnum
 import ua.place.exception.NotFieldException
 import ua.place.exception.NotTypeException
 
-class FilterAndSortPlaces {
+class FilterAndSortPlaceChain {
+    final static Logger logger = Logger.getLogger(FilterAndSortPlaceChain.class)
     List places
 
      def filter(filters) {
         try {
-            if (filters == null) {
+            if (filters==null) {
                 throw new NotTypeException(StatusCodeEnum.NOT_MATCHING as String)
             }
 
@@ -19,7 +22,7 @@ class FilterAndSortPlaces {
             filtersClone.retainAll(Config.types)
 
             if (filtersClone.size() == 0) {
-                throw new NotTypeException(StatusCodeEnum.NOT_MATCHING as String)
+                new FilterAndSortPlaceChain(places: [])
             }
 
             def filteredPlaces = places.find {
@@ -27,16 +30,16 @@ class FilterAndSortPlaces {
                 cloneTypes.retainAll(filtersClone)
                 cloneTypes.size() > 0
             }.collect()
-            return new FilterAndSortPlaces(places: filteredPlaces)
+            return new FilterAndSortPlaceChain(places: filteredPlaces)
         } catch (NotTypeException ex) {
-            println 'filtered: '+ex.message
-            return new FilterAndSortPlaces(places: places.collect())
+            logger.info('filtered: '+ex.message)
+            return new FilterAndSortPlaceChain(places: places.collect())
         }
     }
 
     def sort(sortBy) {
         try {
-            if (sortBy == null || !(sortBy in Place.declaredFields*.name)) {
+            if (sortBy == '' || !(sortBy in Place.declaredFields*.name)) {
                 throw new NotFieldException(StatusCodeEnum.NOT_MATCHING as String)
             }
 
@@ -57,10 +60,10 @@ class FilterAndSortPlaces {
 
             def placesClone = places.collect()
             placesClone.sort(comparator.curry(sortBy))
-            return new FilterAndSortPlaces(places: placesClone)
+            return new FilterAndSortPlaceChain(places: placesClone)
         } catch (NotFieldException ex) {
-            println 'sorted: '+ex.message
-            return new FilterAndSortPlaces(places: places.collect())
+            logger.info('sorted: '+ex.message)
+            return new FilterAndSortPlaceChain(places: places.collect())
         }
     }
 }
