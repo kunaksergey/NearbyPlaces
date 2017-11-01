@@ -9,6 +9,7 @@ import org.junit.Test
  * Created by sa on 29.10.17.
  */
 class GooglePlaceTest {
+
     GooglePlace googlePlace
     final FILE_NAME = "src/main/resources/testData"
     def json

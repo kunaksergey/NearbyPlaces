@@ -55,7 +55,6 @@ class GooglePagesClient {
                                 sleep(Config.PAUSE)
                                 i--
                                 countFail++
-
                             }
                             throw new GoogleException(json.status)
                         }
@@ -64,7 +63,6 @@ class GooglePagesClient {
                         if (json.status == StatusCodeEnum.INVALID_REQUEST as String || json.status == StatusCodeEnum.REQUEST_DENIED as String) {
                             countFail = Config.MAX_FAIL
                             throw new GoogleException(json.status)
-                            //println json.status
                         }
 
                         //data OK
@@ -87,13 +85,13 @@ class GooglePagesClient {
         }
         catch (UnknownHostException ex) {
             throw new GoogleException(ex.message)
-        } catch (ConnectException e) {
-            throw new GoogleException(e.message)
+        } catch (ConnectException ex) {
+            throw new GoogleException(ex.message)
         }
     }
 
     private def limitPage(limit) {
-        (limit < 1 || limit > 3) ? Config.MAX_PAGES_GOOGLE_API : limit
+        (limit < 1 || limit > 3) ? Config.MAX_PAGES : limit
     }
 
 //Получаем дополнительные данные объекта
@@ -125,9 +123,9 @@ class GooglePagesClient {
             return detail
         }
         catch (UnknownHostException ex) {
-            throw new GoogleException(ex.message)
-        } catch (ConnectException e) {
-            throw new GoogleException(e.message)
+            throw new GoogleException(ex)
+        } catch (ConnectException ex) {
+            throw new GoogleException(ex)
         }
     }
 }

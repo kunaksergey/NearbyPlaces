@@ -6,4 +6,8 @@ class GoogleException extends ClientProtocolException{
     GoogleException(String message) {
         super(message)
     }
+
+    GoogleException(Throwable cause) {
+        super(cause)
+    }
 }
