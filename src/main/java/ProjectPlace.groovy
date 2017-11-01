@@ -78,7 +78,7 @@ def shotDialog(){
 //    assert result[0] instanceof Place
 //    result[0].detail=pageRecipient.requestDetailsPage(result[0].placeId)
 //}
-//def userAnswer=new UserAnswer(result:result,log:log)
+//def userAnswer=new OutcomeData(result:result,log:log)
 //def printData = new PrinterData()
 //printData.printOne(userAnswer.result[0])
 //println "******************************"

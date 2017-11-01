@@ -1,7 +1,6 @@
 package ua.place.service
 
 import ua.place.config.Config
-import ua.place.entity.Place
 import ua.place.enumer.StatusCodeEnum
 import ua.place.exception.NotFieldException
 import ua.place.exception.NotTypeException

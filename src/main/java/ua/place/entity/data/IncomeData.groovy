@@ -1,4 +1,6 @@
-package ua.place.entity
+package ua.place.entity.data
+
+import ua.place.entity.place.Location
 
 class IncomeData {
     Location location

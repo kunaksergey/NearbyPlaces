@@ -1,9 +1,7 @@
 package ua.place.parser
 
-import ua.place.entity.IncomeData
-import ua.place.entity.Location
-
-import java.util.zip.DataFormatException
+import ua.place.entity.data.IncomeData
+import ua.place.entity.place.Location
 
 /**
  * Created by sa on 31.10.17.

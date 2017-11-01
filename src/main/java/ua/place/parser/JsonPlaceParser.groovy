@@ -1,9 +1,7 @@
 package ua.place.parser
 
-import ua.place.entity.Location
-import ua.place.entity.Place
-import ua.place.enumer.StatusCodeEnum
-import ua.place.exception.NotReceivedException
+import ua.place.entity.place.Location
+import ua.place.entity.place.Place
 
 class JsonPlaceParser {
 

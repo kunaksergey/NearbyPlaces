@@ -1,4 +1,4 @@
-package ua.place.entity
+package ua.place.entity.place
 
 import groovy.transform.Immutable
 

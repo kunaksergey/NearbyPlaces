@@ -2,8 +2,8 @@ package ua.place.http
 
 import groovyx.net.http.HTTPBuilder
 import ua.place.config.Config
-import ua.place.entity.Detail
-import ua.place.entity.IncomeData
+import ua.place.entity.place.DetailPlace
+import ua.place.entity.data.IncomeData
 import ua.place.enumer.StatusCodeEnum
 import ua.place.exception.GoogleException
 
@@ -98,7 +98,7 @@ class GooglePagesClient {
 
 //Получаем дополнительные данные объекта
     def requestDetailsPage(placeId) throws GoogleException {
-        def detail = new Detail()
+        def detail = new DetailPlace()
         try {
             http.request(GET, JSON) {
                 uri.path = Config.DETAILS_URI //uri place detail

@@ -1,7 +1,7 @@
 package ua.place.runner
 
-import ua.place.entity.IncomeData
-import ua.place.entity.UserAnswer
+import ua.place.entity.data.IncomeData
+import ua.place.entity.data.OutcomeData
 import ua.place.http.GooglePagesClient
 import ua.place.manipulation.FormatPlaceChain
 import ua.place.parser.JsonPlaceParser
@@ -15,6 +15,6 @@ class CommandLineRunner {
         def placeChain = new FormatPlaceChain(places: places).
                 filter(incomeDate.filterBy).
                 sort(incomeDate.sortedBy)
-        new UserAnswer(places: placeChain.places)
+        new OutcomeData(places: placeChain.places)
     }
 }

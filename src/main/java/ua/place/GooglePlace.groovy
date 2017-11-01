@@ -1,7 +1,7 @@
 package ua.place
 
 import groovyx.net.http.HTTPBuilder
-import ua.place.entity.Place
+import ua.place.entity.place.Place
 import ua.place.exception.NotReceivedException
 
 import static groovyx.net.http.ContentType.JSON
