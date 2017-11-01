@@ -1,4 +1,4 @@
-package ua.place.parser
+package ua.place.factory
 
 import ua.place.config.Config
 import ua.place.entity.data.IncomeData
@@ -7,9 +7,9 @@ import ua.place.entity.place.Location
 /**
  * Created by sa on 31.10.17.
  */
-class AnswerIncomeDataParser {
+class IncomeDataCreator {
 
-    def parseAnswers(answerMap) throws NumberFormatException {
+    def createIncomeData(answerMap){
         assert answerMap instanceof Map
         def latitude = Config.DEFAULT_LATITUDE
         def longitude = Config.DEFAULT_LONGITUDE

@@ -1,27 +1,8 @@
 package ua.place.ui
 
-import ua.place.entity.data.IncomeData
-import ua.place.parser.AnswerIncomeDataParser
-
 class ConsoleDialog {
-    def answerParser = new AnswerIncomeDataParser()
 
-    def getIncomeData() {
-        def answersMap = dialog()
-        answerParser.parseAnswers(answersMap)
-    }
-
-    def getIncomeData(incomeData) {
-        assert incomeData instanceof IncomeData
-        def answersMap = [:]
-        answersMap['latitude'] = incomeData.location.latitude
-        answersMap['longitude'] = incomeData.location.longitude
-        answersMap['limit'] =incomeData.limitPages
-        answersMap << shotDialog()
-        answerParser.parseAnswers(answersMap)
-    }
-
-    private def dialog() {
+     def dialog() {
         def answersMap = [:]
         def scanner = new Scanner(System.in)
         print "Latitude (max/min +90 to -90):"
@@ -34,7 +15,7 @@ class ConsoleDialog {
         return answersMap
     }
 
-    private def shotDialog() {
+     def shotDialog() {
         def answersMap = [:]
         def scanner = new Scanner(System.in)
         print "filters (f1 f2 ...): "
@@ -49,5 +30,4 @@ class ConsoleDialog {
         def scanner = new Scanner(System.in)
         return (scanner.nextLine().toLowerCase() == 'y')
     }
-
 }

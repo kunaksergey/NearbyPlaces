@@ -1,6 +1,6 @@
-import ua.place.runner.ConsoleRunner
+import ua.place.runner.ApplicationRunner
 
-new ConsoleRunner().run()
+new ApplicationRunner().run()
 
 
 

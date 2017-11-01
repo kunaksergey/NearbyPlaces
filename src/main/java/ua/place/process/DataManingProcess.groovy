@@ -2,9 +2,8 @@ package ua.place.process
 
 import ua.place.entity.data.IncomeData
 import ua.place.entity.data.OutcomeData
-import ua.place.exception.GoogleException
-import ua.place.http.GooglePagesClient
 import ua.place.format.FilterAndSortPlaceChain
+import ua.place.http.GooglePagesClient
 import ua.place.parser.JsonPlaceParser
 
 class DataManingProcess {

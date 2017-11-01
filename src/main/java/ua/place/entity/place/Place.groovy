@@ -19,9 +19,4 @@ class Place {
                 ", detail=" + detail
 
     }
-
-    def filter(types) {
-
-    }
-
 }
