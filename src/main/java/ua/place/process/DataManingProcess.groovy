@@ -15,6 +15,7 @@ class DataManingProcess {
         assert incomeData instanceof IncomeData
         if (pages == null) {
             pages = googleClient.requestPages(incomeData)
+
         }
         def formatedPlaces = []
         def parsedPlaces = jsonParser.parsePages(incomeData.location, pages)
