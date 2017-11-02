@@ -5,7 +5,7 @@ import ua.place.entity.place.Place
 
 class JsonPlaceParser {
 
-    def parsePages(inLocation, listPages) {
+    def parsePages(inLocation, listResults) {
        // assert listPages instanceof List
         //Парсим JSON объект
        def parsePlace = { itPlace ->
@@ -38,10 +38,8 @@ class JsonPlaceParser {
         }
 
         List list = []
-        listPages.each {
-            it.each {
+        listResults.each {
                 list << parsePlace(it)
-            }
         }
         return list
     }

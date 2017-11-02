@@ -25,10 +25,15 @@ class GooglePagesClient {
         assert request instanceof Request
         def googlePages = []
         def next_page_token = request.next_page_token //токен от клиента
+
+        def lastRequestTimestamp=0
         while (next_page_token != null) {
+            def p = Config.PAUSE - (System.currentTimeMillis() - lastRequestTimestamp)
+            sleep(p)
             def page = quaryGoogle(request, next_page_token)
-            googlePages << page
-            next_page_token = page.next_page_token //токен от сервера
+            googlePages += page
+            next_page_token = page[0].next_page_token //токен от сервера
+            lastRequestTimestamp = System.currentTimeMillis()
         }
         return googlePages
 
@@ -42,15 +47,17 @@ class GooglePagesClient {
             try {
                 http.request(GET, JSON) {
                     uri.path = Config.NEAR_BY_SEARCH_URI //uri near places
-                    headers.Accept = 'application/json'
+                    //headers.Accept = 'application/json'
 
                     def keyMap = [location: request.location.latitude + ',' + request.location.longitude,
                                   radius  : request.radius,
                                   key     : Config.KEY,
                                   language: Config.LANGUAGE,
-                    ]
+                                 ]
                     if (next_page_token != null) {
-                        keyMap += [next_page_token:next_page_token]
+                        println next_page_token
+                        keyMap += [pagetoken:next_page_token]
+
                     }
 
                     //сохраняем url ключи для запроса
@@ -77,9 +84,11 @@ class GooglePagesClient {
                         //bad quary
                         if (json.status == StatusCodeEnum.INVALID_REQUEST as String || json.status == StatusCodeEnum.REQUEST_DENIED as String || json.status == StatusCodeEnum.ZERO_RESULTS as String) {
                             //если флаги: INVALID_REQUEST или REQUEST_DENIED-разу на выход
+                            println "xx"
                             throw new GoogleException(json.status as String)
                         }
 
+                        print json.next_page_token
                         googlePage << json
                     }
                     response.'404' = { resp ->

@@ -2,7 +2,7 @@ package ua.place.client.process
 
 import ua.place.client.exception.NotFieldException
 import ua.place.client.exception.NotTypeException
-import ua.place.client.format.FormatProcessor
+import ua.place.client.factory.FormatProcessor
 import ua.place.client.factory.QuaryCreator
 import ua.place.client.tools.PrintData
 import ua.place.client.ui.ConsoleDialog

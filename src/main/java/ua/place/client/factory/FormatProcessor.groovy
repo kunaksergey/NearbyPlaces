@@ -1,4 +1,4 @@
-package ua.place.client.format
+package ua.place.client.factory
 
 import ua.place.client.exception.NotFieldException
 import ua.place.client.exception.NotTypeException
