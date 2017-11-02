@@ -1,43 +1,41 @@
 package ua.place
 
 import ua.place.client.process.ClientProcess
-import ua.place.entity.place.Location
-import ua.place.entity.quary.Request
-import ua.place.server.process.ServerProcess
 
 class ApplicationRunner {
-    def serverProcess = new ServerProcess() //server
     def clientProcess = new ClientProcess()//клиент
 
     def run() {
-        def isCosed = false
+        def answerMap=clientProcess.dialog() //запросить у клиета данные
+        def isClosed = !clientProcess.validate(answerMap) //проверяем данные от клиента
+        while (!isClosed) {
 
-        while (!isCosed) {
-
-            //def firstRequest = clientProcess.createQuary() //запросить у клиета данные
+            def firstRequest = clientProcess.createRequest(answerMap) //получить запрос
             //потом удалить
-             def firstRequest = new Request(radius: 1000,location: new Location(latitude:-33.70522,longitude:151.1957362))
+            // def firstRequest = new Request(radius: 1000,location: new Location(latitude:-33.70522,longitude:151.1957362))
 
+            //получить данные от сервера
+            def firstResponse= clientProcess.getResponse(firstRequest)
 
-            assert firstRequest instanceof Request//валидный ли запрос
-            def firstResponse= serverProcess.getResponse(firstRequest) //получить данные от сервера
             //Если есть данные в ответе
             if (firstResponse.places.size() != 0) {
-
+                    //отпраляем на внутреннюю обработку
                 clientProcess.handleResponse(firstResponse)
 
-                if (firstResponse.status=='[OK]'&&
-                            firstResponse.next_page_token!=''&&
+                if (clientProcess.hasNextData(firstResponse)&&
                                     clientProcess.yesOrNot("Get extended quary?")) {
-                    def secondRequest = clientProcess.createQuary(firstRequest,firstResponse) //формируем новый запрос
-                    assert firstRequest instanceof Request//валидный ли запрос
-                    def secondResponse = serverProcess.getResponse(secondRequest)
-                    //получить розширенные данные от сервера
-                    clientProcess.handleResponse(secondResponse)
+                    def nextRequest = clientProcess.createRequest(firstRequest,firstResponse) //формируем новый запрос
+                    //получить роcширенные данные от сервера
+                    def nextResponse = clientProcess.getResponse(nextRequest)
+                    //отпраляем на внутреннюю обработку
+                    clientProcess.handleResponse(nextResponse)
 
                 }
             }
-            isCosed = !clientProcess.yesOrNot("Change requst?")
+            isClosed = !clientProcess.yesOrNot("Improove requst?")
+            if(!isClosed){
+               answerMap<<clientProcess.shortDialog()
+            }
         }
     }
 }

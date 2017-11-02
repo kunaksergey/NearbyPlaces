@@ -6,13 +6,17 @@ import ua.place.client.factory.FormatProcessor
 import ua.place.client.factory.QuaryCreator
 import ua.place.client.tools.PrintData
 import ua.place.client.ui.ConsoleDialog
+import ua.place.client.validator.AnswerValidator
+import ua.place.entity.quary.Request
 import ua.place.entity.quary.Response
+import ua.place.server.process.ServerProcess
+import ua.place.server.validator.RequestValidator
 
 class ClientProcess {
-    def quaryCreator = new QuaryCreator()
-    def consoleDialog = new ConsoleDialog()
-    def formatProcessor = new FormatProcessor()
-    def printer = new PrintData()
+    def quaryCreator = new QuaryCreator() //обработчик запросов
+    def consoleDialog = new ConsoleDialog() //работа с консолью
+    def formatProcessor = new FormatProcessor() //процессор сортировки и фильтрации
+    def printer = new PrintData() //печать результатов
 
     //Обработка пришедшего ответа на клиенте
     def handleResponse(response) {
@@ -28,22 +32,25 @@ class ClientProcess {
         }
     }
 
+    def dialog() {
+        consoleDialog.dialog()
+    }
     //первый запрос
-    def createQuary() {
-        def answerMap = consoleDialog.dialog()
-        return quaryCreator.createQuary(answerMap)
+    def createRequest(answerMap) {
+        def query = quaryCreator.createQuary(answerMap)
+        return query
     }
 
     //второй запрос
-    def createQuary(request, responce) {
+    def createRequest(request, responce) {
         return quaryCreator.createQuary(request, responce)
     }
 
     def yesOrNot(def message) {
-        consoleDialog.reply(message)
+        consoleDialog.yesOrNot(message)
     }
 
-    //фильтрация и сортировка plas'ов
+    //фильтрация и сортировка places
     private def handlePlaces(places) {
         printer.printPlaces(filterPlaces(places))
         printer.printPlaces(sortPlaces(places))
@@ -79,4 +86,20 @@ class ClientProcess {
         }
     }
 
+    def getResponse(Request request) {
+        new ServerProcess().getResponse(request)//SERVER
+    }
+
+    boolean hasNextData(Response response) {
+        response.status == '[OK]' &&
+                response.next_page_token != null
+    }
+
+    def shortDialog() {
+        consoleDialog.shortDialog()
+    }
+
+    def validate(answerMap) {
+        new AnswerValidator().validate(answerMap)
+    }
 }

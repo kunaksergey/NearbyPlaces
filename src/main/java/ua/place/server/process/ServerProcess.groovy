@@ -30,17 +30,16 @@ class ServerProcess {
                 def pages = googleClient.requestOnePage(request)
                 def parsedPlaces = jsonParser.parsePages(request.location, pages[0].results)
                 return new Response(places: parsedPlaces,
-                       status: pages.status,
+                        status: pages.status,
                         next_page_token: pages[0].next_page_token
                 )
-            }
-            else {
+            } else {
                 def pages = googleClient.requestAllPages(request)
-                def parsedPlaces=[]
-                for(int i=0;i<pages.size();i++){
-                  parsedPlaces += jsonParser.parsePages(request.location, pages[i].results)
+                def parsedPlaces = []
+                for (int i = 0; i < pages.size(); i++) {
+                    parsedPlaces += jsonParser.parsePages(request.location, pages[i].results)
                 }
-                 return new Response(places: parsedPlaces,
+                return new Response(places: parsedPlaces,
                         status: pages[pages.size() - 1].status)
             }
         } catch (GoogleException ex) {

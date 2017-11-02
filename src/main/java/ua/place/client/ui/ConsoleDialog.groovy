@@ -26,9 +26,17 @@ class ConsoleDialog {
         scanner.nextLine()
     }
 
-    def reply(def message) {
+    def yesOrNot(def message) {
         println "$message (Y/N)"
         def scanner = new Scanner(System.in)
         return (scanner.nextLine().toLowerCase() == 'y')
+    }
+
+    def shortDialog() {
+        def answersMap = [:]
+        def scanner = new Scanner(System.in)
+        print "Radius: "
+        answersMap['radius'] = scanner.nextLine()
+        return answersMap
     }
 }

@@ -1,9 +1,9 @@
 package ua.place.server.http
 
 import groovyx.net.http.HTTPBuilder
+import ua.place.entity.place.DetailPlace
 
 //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=45,38&radius=500&key=AIzaSyBpLk-GrkZy8N599XaP9RTsBl-kGNr2Fpg
-import ua.place.entity.place.DetailPlace
 import ua.place.entity.quary.Request
 import ua.place.server.config.Config
 import ua.place.server.enumer.StatusCodeEnum
@@ -26,7 +26,7 @@ class GooglePagesClient {
         def googlePages = []
         def next_page_token = request.next_page_token //токен от клиента
 
-        def lastRequestTimestamp=0
+        def lastRequestTimestamp = 0
         while (next_page_token != null) {
             def p = Config.PAUSE - (System.currentTimeMillis() - lastRequestTimestamp)
             sleep(p)
@@ -53,10 +53,10 @@ class GooglePagesClient {
                                   radius  : request.radius,
                                   key     : Config.KEY,
                                   language: Config.LANGUAGE,
-                                 ]
+                    ]
                     if (next_page_token != null) {
                         println next_page_token
-                        keyMap += [pagetoken:next_page_token]
+                        keyMap += [pagetoken: next_page_token]
 
                     }
 
@@ -84,7 +84,6 @@ class GooglePagesClient {
                         //bad quary
                         if (json.status == StatusCodeEnum.INVALID_REQUEST as String || json.status == StatusCodeEnum.REQUEST_DENIED as String || json.status == StatusCodeEnum.ZERO_RESULTS as String) {
                             //если флаги: INVALID_REQUEST или REQUEST_DENIED-разу на выход
-                            println "xx"
                             throw new GoogleException(json.status as String)
                         }
 

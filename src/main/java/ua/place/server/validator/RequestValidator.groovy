@@ -8,11 +8,11 @@ import ua.place.server.exception.BadRequestException
  * Created by sa on 02.11.17.
  */
 class RequestValidator {
-    def validate(request) throws BadRequestException {
+    def validate(request){
         request instanceof Request
         try {
-            def latitude = new BigDecimal(request.location.latitude)
-            def longitude = new BigDecimal(request.location.longitude)
+            def latitude = new BigDecimal(request.location.latitude as BigDecimal)
+            def longitude = new BigDecimal(request.location.longitude as BigDecimal)
 
             def radius = new Integer(request.radius as Integer)
             if (latitude < -90 || latitude > 90) throw new BadRequestException(StatusCodeEnum.INVALID_REQUEST as String)
