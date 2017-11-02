@@ -11,11 +11,11 @@ import ua.place.client.format.SortPlace
 class FormatProcessor {
 
     def filterBy(places, filterBy) throws NotTypeException {
-        return new FilterPlace(filter: filterBy).filter(places)
+        return new FilterPlace(filterBy: filterBy).filter(places)
     }
 
     def sortedBy(places, sortedBy) throws NotFieldException {
-        return new SortPlace(field: sortedBy).sort(places)
+        return new SortPlace(sortedBy: sortedBy).sort(places)
     }
 
 }

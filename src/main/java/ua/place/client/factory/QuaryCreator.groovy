@@ -17,15 +17,15 @@ class QuaryCreator {
             def radius = answerMap['radius'] as Integer
             return new Request(location: new Location(latitude: latitude, longitude: longitude), radius: radius)
         } catch (NumberFormatException ex) {
-            ex.printStackTrace()
+            println "Ошибка валидации на клиенте"
         }
     }
 
     def createQuary(request, response) {
         assert request instanceof Request
         assert response instanceof Response
-        def requestClone = request.clone() as Request
-        if (request.next_page_token != null) {
+        def requestClone = new Request(location: request.location,radius: request.radius)
+        if (response.next_page_token != null) {
             requestClone.next_page_token = response.next_page_token
         }
         return requestClone

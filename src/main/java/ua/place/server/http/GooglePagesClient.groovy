@@ -1,16 +1,19 @@
 package ua.place.server.http
 
 import groovyx.net.http.HTTPBuilder
-import ua.place.server.config.Config
-import ua.place.entity.quary.Request
+
+//https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=45,38&radius=500&key=AIzaSyBpLk-GrkZy8N599XaP9RTsBl-kGNr2Fpg
 import ua.place.entity.place.DetailPlace
+import ua.place.entity.quary.Request
+import ua.place.server.config.Config
+import ua.place.server.enumer.StatusCodeEnum
 import ua.place.server.exception.GoogleException
 
 import static groovyx.net.http.ContentType.JSON
 import static groovyx.net.http.Method.GET
 
 class GooglePagesClient {
-   // final static Logger logger = Logger.getLogger(GooglePagesClient.class)
+    // final static Logger logger = Logger.getLogger(GooglePagesClient.class)
     def http = new HTTPBuilder(Config.BASE_URL)
 
     def requestOnePage(request) throws GoogleException {
@@ -33,19 +36,21 @@ class GooglePagesClient {
 
     def quaryGoogle(request, next_page_token) throws GoogleException {
         def countFail = Config.MAX_FAIL //количество попыток чтения данных
-
+        def googlePage = []
         while (countFail != 0) {
-            def googlePage = []
-            try {
-                http.request(GET, JSON) { req ->
-                    uri.path = Config.NEAR_BY_SEARCH_URI //uri near places
 
-                    def keyMap = [key     : Config.KEY,
-                                  location: request.location.latitude + ',' + request.location.longitude,
+            try {
+                http.request(GET, JSON) {
+                    uri.path = Config.NEAR_BY_SEARCH_URI //uri near places
+                    headers.Accept = 'application/json'
+
+                    def keyMap = [location: request.location.latitude + ',' + request.location.longitude,
                                   radius  : request.radius,
-                                  language: Config.LANGUAGE]
+                                  key     : Config.KEY,
+                                  language: Config.LANGUAGE,
+                    ]
                     if (next_page_token != null) {
-                        keyMap += [next_page_token]
+                        keyMap += [next_page_token:next_page_token]
                     }
 
                     //сохраняем url ключи для запроса
@@ -66,18 +71,19 @@ class GooglePagesClient {
                                 //если флаги: UNKNOWN_ERROR или OVER_QUERY_LIMIT-пытаемся прочитать данные
                                 countFail--
                             }
+                            throw new GoogleException(json.status as String)
                         }
 
                         //bad quary
-                        if (json.status == StatusCodeEnum.INVALID_REQUEST as String || json.status == StatusCodeEnum.REQUEST_DENIED as String) {
-                            countFail = 0 //если флаги: INVALID_REQUEST или REQUEST_DENIED-разу на выход
+                        if (json.status == StatusCodeEnum.INVALID_REQUEST as String || json.status == StatusCodeEnum.REQUEST_DENIED as String || json.status == StatusCodeEnum.ZERO_RESULTS as String) {
+                            //если флаги: INVALID_REQUEST или REQUEST_DENIED-разу на выход
+                            throw new GoogleException(json.status as String)
                         }
 
                         googlePage << json
                     }
                     response.'404' = { resp ->
                         //do nothing
-
                     }
                 }
             } catch (UnknownHostException ex) {
@@ -86,6 +92,7 @@ class GooglePagesClient {
                 throw new GoogleException(ex.message)
             }
         }
+        return googlePage
     }
 
 //Получаем дополнительные данные объекта

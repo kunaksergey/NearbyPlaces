@@ -6,9 +6,9 @@ import ua.place.entity.place.Place
 class JsonPlaceParser {
 
     def parsePages(inLocation, listPages) {
-        assert listPages instanceof List
+       // assert listPages instanceof List
         //Парсим JSON объект
-        def parsePlace = { itPlace ->
+       def parsePlace = { itPlace ->
 
             //Расчет дистанции
             def distance = { x, y, x1, y1 ->

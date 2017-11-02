@@ -53,14 +53,14 @@ class ClientProcess {
     private def filterPlaces(places) {
         try {
             //если нет фильтров не фильтруем
-            def filterBy = consoleDialog.getFilter()
+            def filterBy = consoleDialog.getFilter() as List
             if (filterBy.size() == 0 as int) {
-                return
+                return []
             }
             return formatProcessor.filterBy(places, filterBy)
         } catch (NotTypeException ex) {
             println ex.message
-            return
+            return []
         }
     }
 
@@ -70,12 +70,12 @@ class ClientProcess {
             def sortedBy = consoleDialog.sortDialog()
             //если не ввели поле не сортируем
             if (sortedBy.length() == (0 as int)) {
-                return
+                return places
             }
             return formatProcessor.sortedBy(places, sortedBy)
         } catch (NotFieldException ex) {
             println ex.message
-            return
+            return places
         }
     }
 
