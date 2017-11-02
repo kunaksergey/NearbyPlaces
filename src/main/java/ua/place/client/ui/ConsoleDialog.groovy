@@ -11,18 +11,19 @@ class ConsoleDialog {
         answersMap['longitude'] = scanner.nextLine()
         print "Radius: "
         answersMap['radius'] = scanner.nextLine()
-        answersMap << shotDialog()
         return answersMap
     }
 
-     def shotDialog() {
-        def answersMap = [:]
-        def scanner = new Scanner(System.in)
+     def getFilter(){
         print "filters (f1 f2 ...): "
-        answersMap['filterBy'] = scanner.nextLine()
-        print "sort:"
-        answersMap['sortedBy'] = scanner.nextLine()
-        return answersMap
+        def scanner = new Scanner(System.in)
+        scanner.nextLine().split(' ')
+    }
+
+    def sortDialog(){
+        print "sort: "
+        def scanner = new Scanner(System.in)
+        scanner.nextLine()
     }
 
     def reply(def message) {

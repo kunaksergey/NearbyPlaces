@@ -1,40 +1,23 @@
 package ua.place.client.tools
 
-import ua.place.entity.data.IncomeData
-import ua.place.entity.data.OutcomeData
+import ua.place.entity.quary.Response
 
 class PrintData {
 
-    private printAll(outcomeData){
-        assert outcomeData in OutcomeData
-        if(outcomeData.places.size()==0 ){
+    def printResponse(response) {
+        assert response in Response
+        if (response.places.size() == 0) {
             println "[]"
         }
-        outcomeData.places.each{
-        println it
-        }
+        println response.status
+        printPlaces(response.places)
     }
 
-    private def printOne(outcomeData){
-        assert outcomeData in OutcomeData
-        if(outcomeData.places[0]==null){
-             return
+    def printPlaces(places) {
+        assert places instanceof List
+        places.each {
+            println it
         }
-         println outcomeData.places[0]
-    }
-    def printOutcomeData(outcomeData){
-        assert outcomeData in OutcomeData
-        println()
-        printOne(outcomeData)
-        println "************************"
-        printAll(outcomeData)
-    }
-    def printIncomeData(incomeData){
-        assert incomeData in IncomeData
-        println()
-        print("latitude: $incomeData.location.latitude, longitude:$incomeData.location.longitude," +
-                " limit: $incomeData.limitPages, filtered by: $incomeData.filterBy, sorted by: $incomeData.sortedBy")
-        println()
     }
 }
 

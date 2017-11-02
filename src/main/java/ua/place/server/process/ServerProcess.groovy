@@ -1,7 +1,7 @@
 package ua.place.server.process
 
-import ua.place.entity.data.IncomeData
-import ua.place.entity.data.OutcomeData
+import ua.place.entity.quary.Request
+import ua.place.entity.quary.Response
 import ua.place.server.enumer.StatusCodeEnum
 import ua.place.server.exception.GoogleException
 import ua.place.server.parser.JsonPlaceParser
@@ -13,25 +13,24 @@ class ServerProcess {
     def jsonParser = new JsonPlaceParser()
 
 
-    def getOutcomeData(incomeData) {
+    def getResponse(request) {
 
-
-        assert incomeData instanceof IncomeData
+        assert request instanceof Request
         try {
-            if (incomeData.next_page_token == null) {
-                def pages = googleClient.requestOnePage(incomeData)
-                def parsedPlaces = jsonParser.parsePages(incomeData.location, page)
-                return new OutcomeData(places: parsedPlaces,
+            if (request.next_page_token == null) {
+                def pages = googleClient.requestOnePage(request)
+                def parsedPlaces = jsonParser.parsePages(request.location, pages)
+                return new Response(places: parsedPlaces,
                         status: pages[0].status,
-                        token: pages[0].next_page_token)
+                        next_page_token: pages[0].next_page_token)
             } else {
-                def pages = googleClient.requestAllPages(incomeData)
-                def parsedPlaces = jsonParser.parsePages(incomeData.location, pages)
-                return new OutcomeData(places: parsedPlaces,
+                def pages = googleClient.requestAllPages(request)
+                def parsedPlaces = jsonParser.parsePages(request.location, pages)
+                return new Response(places: parsedPlaces,
                         status: pages[pages.size() - 1].status)
             }
         } catch (GoogleException ex) {
-            return new OutcomeData(places: [], status: StatusCodeEnum.GOOGLE_ERROR)
+            return new Response(places: [], status: StatusCodeEnum.GOOGLE_ERROR)
         }
     }
 }

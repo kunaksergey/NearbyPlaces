@@ -1,4 +1,4 @@
-package ua.place.server.exception
+package ua.place.client.exception
 
 class NotFieldException extends Exception{
     NotFieldException(String message) {

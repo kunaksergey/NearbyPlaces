@@ -1,14 +1,12 @@
-package ua.place.client.format
+package ua.place.client.for_delete
 
-import org.apache.log4j.Logger
 import ua.place.server.config.Config
 import ua.place.entity.place.Place
-import ua.place.server.enumer.StatusCodeEnum
-import ua.place.server.exception.NotFieldException
-import ua.place.server.exception.NotTypeException
+import ua.place.client.exception.NotFieldException
+import ua.place.client.exception.NotTypeException
 
 class FilterAndSortPlaceChain {
-    final static Logger logger = Logger.getLogger(FilterAndSortPlaceChain.class)
+
     List places
 
      def filter(filters) {

@@ -6,6 +6,5 @@ enum StatusCodeEnum {
     REQUEST_DENIED,
     INVALID_REQUEST,
     UNKNOWN_ERROR,
-    NOT_MATCHING,
     GOOGLE_ERROR
 }

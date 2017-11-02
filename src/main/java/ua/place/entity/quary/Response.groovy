@@ -1,6 +1,6 @@
-package ua.place.entity.data
+package ua.place.entity.quary
 
-class OutcomeData {
+class Response {
     def places
     String next_page_token
     String status
