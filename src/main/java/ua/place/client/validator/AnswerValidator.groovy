@@ -1,9 +1,7 @@
 package ua.place.client.validator
 
 import ua.place.client.exception.BadAnswerException
-import ua.place.entity.quary.Request
 import ua.place.client.enumer.StatusCodeEnum
-import ua.place.server.exception.BadRequestException
 
 /**
  * Created by sa on 02.11.17.

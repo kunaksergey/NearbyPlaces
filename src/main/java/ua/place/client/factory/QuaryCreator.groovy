@@ -1,8 +1,8 @@
 package ua.place.client.factory
 
 import ua.place.entity.place.Location
-import ua.place.entity.quary.Request
-import ua.place.entity.quary.Response
+import ua.place.entity.transport.Request
+import ua.place.entity.transport.Response
 
 /**
  * Created by sa on 31.10.17.

@@ -17,13 +17,17 @@ class ApplicationRunner {
             //получить данные от сервера
             def firstResponse= clientProcess.getResponse(firstRequest)
 
+            //def result=clientProcess.getResult(firstRequest)
+            //clientProcess.printResult(result)
+            //filterAndSort(result)
             //Если есть данные в ответе
+
             if (firstResponse.places.size() != 0) {
-                    //отпраляем на внутреннюю обработку
+
                 clientProcess.handleResponse(firstResponse)
 
                 if (clientProcess.hasNextData(firstResponse)&&
-                                    clientProcess.yesOrNot("Get extended quary?")) {
+                                    clientProcess.yesOrNot("Get extended transport?")) {
                     def nextRequest = clientProcess.createRequest(firstRequest,firstResponse) //формируем новый запрос
                     //получить роcширенные данные от сервера
                     def nextResponse = clientProcess.getResponse(nextRequest)
@@ -38,4 +42,22 @@ class ApplicationRunner {
             }
         }
     }
+
+    def filterAndSort(result) {
+       assert result instanceof List
+        if(result.size() != (0 as int)) {
+            def replyFormat = true
+            while (replyFormat) {
+                def filter = clientProcess.getFilter()
+                def formatResult = clientProcess.getFilterResult(result, filter)
+                clientProcess.printResult(formatResult)
+                def sortField = clientProcess.getSortField()
+                def sortedResult = clientProcess.getSortedResult(result, sortField)
+                clientProcess.printResult(sortedResult)
+                replyFormat = clientProcess.yesOrNot("Reply format?")
+            }
+        }
+    }
+
+
 }

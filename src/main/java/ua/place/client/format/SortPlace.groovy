@@ -14,7 +14,7 @@ class SortPlace {
     def sort(places) throws NotFieldException {
 
         def placesClone = places.collect()
-        if (sortedBy == '') {
+        if (sortedBy == ''||sortedBy == 'types') {
             return placesClone
         }
         if (!(sortedBy in Place.declaredFields*.name)) {

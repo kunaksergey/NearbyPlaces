@@ -1,6 +1,6 @@
 package ua.place.client.tools
 
-import ua.place.entity.quary.Response
+import ua.place.entity.transport.Response
 
 class PrintData {
 
@@ -14,6 +14,9 @@ class PrintData {
     }
 
     def printPlaces(places) {
+        if (places.size() == 0) {
+            println "[]"
+        }
         assert places instanceof List
         places.each {
             println it

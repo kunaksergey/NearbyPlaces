@@ -4,19 +4,20 @@ import ua.place.client.exception.NotFieldException
 import ua.place.client.exception.NotTypeException
 import ua.place.client.factory.FormatProcessor
 import ua.place.client.factory.QuaryCreator
+import ua.place.client.handler.HandlerData
 import ua.place.client.tools.PrintData
 import ua.place.client.ui.ConsoleDialog
 import ua.place.client.validator.AnswerValidator
-import ua.place.entity.quary.Request
-import ua.place.entity.quary.Response
+import ua.place.entity.transport.Request
+import ua.place.entity.transport.Response
 import ua.place.server.process.ServerProcess
-import ua.place.server.validator.RequestValidator
 
 class ClientProcess {
     def quaryCreator = new QuaryCreator() //обработчик запросов
     def consoleDialog = new ConsoleDialog() //работа с консолью
     def formatProcessor = new FormatProcessor() //процессор сортировки и фильтрации
     def printer = new PrintData() //печать результатов
+    def handleData = new HandlerData() //обработчик результатов
 
     //Обработка пришедшего ответа на клиенте
     def handleResponse(response) {
@@ -71,6 +72,28 @@ class ClientProcess {
         }
     }
 
+    def getResult(response) {
+        handleData.getPlaces(response)
+    }
+
+    def getSortedResult(places, sortedBy) {
+        try {
+            //если не ввели поле не сортируем
+            if (sortedBy.length() == (0 as int)) {
+                return places
+            }
+            return formatProcessor.sortedBy(places, sortedBy)
+        } catch (NotFieldException ex) {
+            println ex.message
+            return places
+        }
+    }
+
+
+    def printResult(places) {
+        printer.printPlaces(places)
+    }
+
     //возвращаем отсортированный список places
     private def sortPlaces(places) {
         try {
@@ -101,5 +124,23 @@ class ClientProcess {
 
     def validate(answerMap) {
         new AnswerValidator().validate(answerMap)
+    }
+
+    def getFilter() {
+        def filterBy = consoleDialog.getFilter() as List
+        return (filterBy.size() == 0 as int)?[]:filterBy
+    }
+
+    def getFilterResult(places, filterBy) {
+        try {
+            return formatProcessor.filterBy(places, filterBy)
+        } catch (NotTypeException ex) {
+            println ex.message
+            return []
+        }
+    }
+
+    def getSortField() {
+        consoleDialog.sortDialog()
     }
 }

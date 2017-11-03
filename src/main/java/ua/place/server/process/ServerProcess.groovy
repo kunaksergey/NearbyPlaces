@@ -1,7 +1,7 @@
 package ua.place.server.process
 
-import ua.place.entity.quary.Request
-import ua.place.entity.quary.Response
+import ua.place.entity.transport.Request
+import ua.place.entity.transport.Response
 import ua.place.server.enumer.StatusCodeEnum
 import ua.place.server.exception.GoogleException
 import ua.place.server.http.GooglePagesClient

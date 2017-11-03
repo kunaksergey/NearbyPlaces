@@ -1,4 +1,4 @@
-package ua.place.entity.quary
+package ua.place.entity.transport
 
 import ua.place.entity.place.Location
 

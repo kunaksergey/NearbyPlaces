@@ -4,7 +4,7 @@ import groovyx.net.http.HTTPBuilder
 import ua.place.entity.place.DetailPlace
 
 //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=45,38&radius=500&key=AIzaSyBpLk-GrkZy8N599XaP9RTsBl-kGNr2Fpg
-import ua.place.entity.quary.Request
+import ua.place.entity.transport.Request
 import ua.place.server.config.Config
 import ua.place.server.enumer.StatusCodeEnum
 import ua.place.server.exception.GoogleException
@@ -66,12 +66,12 @@ class GooglePagesClient {
                     response.success = { resp, json ->
                         assert resp.status == 200
 
-                        //quary OK
+                        //transport OK
                         if (json.status == StatusCodeEnum.OK as String) {
                             countFail = 0 //если данные прочитаны успешно, то на выход
                         }
 
-                        //try again get quary
+                        //try again get transport
                         if (json.status == StatusCodeEnum.UNKNOWN_ERROR as String || json.status == StatusCodeEnum.OVER_QUERY_LIMIT as String) {
                             if (countFail != Config.MAX_FAIL) {
                                 sleep(Config.PAUSE)
@@ -81,7 +81,7 @@ class GooglePagesClient {
                             throw new GoogleException(json.status as String)
                         }
 
-                        //bad quary
+                        //bad transport
                         if (json.status == StatusCodeEnum.INVALID_REQUEST as String || json.status == StatusCodeEnum.REQUEST_DENIED as String || json.status == StatusCodeEnum.ZERO_RESULTS as String) {
                             //если флаги: INVALID_REQUEST или REQUEST_DENIED-разу на выход
                             throw new GoogleException(json.status as String)

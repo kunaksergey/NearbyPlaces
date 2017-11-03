@@ -1,6 +1,6 @@
 package ua.place.server.validator
 
-import ua.place.entity.quary.Request
+import ua.place.entity.transport.Request
 import ua.place.server.enumer.StatusCodeEnum
 import ua.place.server.exception.BadRequestException
 
