@@ -1,6 +1,6 @@
 package ua.place.controller.places
 
-import ua.place.model.places.component.FormatAndSort
+import ua.place.model.places.component.FilterAndSort
 import ua.place.model.places.component.JsonPlaceParser
 import ua.place.model.places.component.NearPlacesUrlValidator
 import ua.place.model.places.component.UriDecoderGooglePlaces
@@ -34,7 +34,7 @@ class PlacesController {
                         longitude: uriDecoder.getLontitude(url) as BigDecimal
                 ), pages[0].results)
             }
-           def formatedPlace=new FormatAndSort(places:  parsedPlaces)
+           def formatedPlace=new FilterAndSort(places:  parsedPlaces)
                    .filter(uriDecoder.getFilterBy(url))
                    .sort(uriDecoder.getSortedBy(url))
                    .getPlaces()
